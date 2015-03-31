@@ -1,0 +1,11 @@
+#cloud-config
+# Cloud config for application servers 
+
+runcmd:
+  # Install Tsuru repos
+  - sudo apt-get update 
+  - sudo apt-get install python-software-properties -y
+  - sudo apt-add-repository ppa:tsuru/ppa -y
+  - sudo apt-get update
+
+output: {all: '| tee -a /var/log/cloud-init-output.log'}

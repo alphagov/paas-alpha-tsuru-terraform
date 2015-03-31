@@ -1,1 +1,0 @@
-# tsuru-terraform
