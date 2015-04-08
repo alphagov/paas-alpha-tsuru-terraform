@@ -6,8 +6,12 @@ output "app.1.ip" {
   value = "${aws_instance.tsuru-app.1.private_ip}"
 }
 
-output "app.2.ip" {
-  value = "${aws_instance.tsuru-app.2.private_ip}"
+output "gandalf.private.ip" {
+  value = "${aws_instance.gandalf.private_ip}"
+}
+
+output "gandalf.public.ip" {
+  value = "${aws_instance.gandalf.public_ip}"
 }
 
 output "nat.ip" {

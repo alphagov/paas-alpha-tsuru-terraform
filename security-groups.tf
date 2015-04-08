@@ -35,6 +35,24 @@ resource "aws_security_group" "nat" {
   }
 }
 
+/* Security group for the Gandalf server */
+resource "aws_security_group" "gandalf" {
+  name = "tsuru-gandalf"
+  description = "Security group for Gandalf instance that allows SSH access from internet"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["80.194.77.0/24"]
+  }
+
+  tags {
+    Name = "tsuru-gandalf"
+  }
+}
+
 /* Security group for the web */
 resource "aws_security_group" "web" {
   name = "web-tsuru"

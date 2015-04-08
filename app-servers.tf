@@ -1,14 +1,57 @@
-/* App servers */
+/* API and Docker servers */
 resource "aws_instance" "tsuru-app" {
-  count = 3
+  count = 2
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private1.id}"
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   user_data = "${file(\"cloud-config/app.yml\")}"
-  tags = { 
+  tags = {
     Name = "tsuru-app-${count.index}"
+  }
+}
+
+/* Gandalf server */
+resource "aws_instance" "gandalf" {
+  ami = "${lookup(var.amis, var.region)}"
+  instance_type = "t2.medium"
+  subnet_id = "${aws_subnet.public.id}"
+  associate_public_ip_address = true
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.gandalf.id}"]
+  key_name = "${aws_key_pair.deployer.key_name}"
+  user_data = "${file(\"cloud-config/app.yml\")}"
+  tags = {
+    Name = "tsuru-app-gandalf"
+  }
+}
+
+/* API external Load balancer */
+resource "aws_elb" "api-ext" {
+  name = "tsuru-api-elb-ext"
+  subnets = ["${aws_subnet.public.id}"]
+  instances = [ "${aws_instance.tsuru-app.0.id}" ]
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  listener {
+    instance_port = 8080
+    instance_protocol = "http"
+    lb_port = 8080
+    lb_protocol = "http"
+  }
+}
+
+/* API internal Load balancer */
+resource "aws_elb" "api-int" {
+  name = "tsuru-api-elb-int"
+  subnets = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
+  instances = [ "${aws_instance.tsuru-app.0.id}" ]
+  internal = true
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  listener {
+    instance_port = 8080
+    instance_protocol = "http"
+    lb_port = 8080
+    lb_protocol = "http"
   }
 }
 
@@ -35,6 +78,13 @@ resource "aws_autoscaling_group" "router" {
   force_delete = true
   launch_configuration = "${aws_launch_configuration.router.name}"
   load_balancers = ["${aws_elb.router.name}"]
+  /* To be added after v0.4.0
+  tag = {
+    key = "Name"
+    value = "tsuru-app-router"
+    propagate_at_launch = true
+  }
+  */
 }
 
 /* Router Load balancer */
