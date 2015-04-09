@@ -16,13 +16,22 @@ resource "aws_route53_record" "wildcard" {
   records = ["${aws_route53_record.router.name}"]
 }
 
-/* API CNAME record */
-resource "aws_route53_record" "api" {
+/* API external CNAME record */
+resource "aws_route53_record" "api-external" {
   zone_id = "ZAO40KKT7J2PB"
   name = "api.tsuru.paas.alphagov.co.uk"
   type = "CNAME"
   ttl = "60"
   records = ["${aws_elb.api-ext.dns_name}"]
+}
+
+/* API internal CNAME record */
+resource "aws_route53_record" "api-internal" {
+  zone_id = "ZAO40KKT7J2PB"
+  name = "internal.api.tsuru.paas.alphagov.co.uk"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.api-int.dns_name}"]
 }
 
 /* Gandalf A record */
