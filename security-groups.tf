@@ -99,6 +99,13 @@ resource "aws_security_group" "postgres" {
     cidr_blocks = ["80.194.77.0/24"]
   }
 
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["80.194.77.0/24"]
+  }
+
   tags {
     Name = "tsuru-postgres"
   }
