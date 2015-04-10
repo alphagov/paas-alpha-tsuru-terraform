@@ -83,7 +83,7 @@ resource "aws_autoscaling_group" "router" {
 /* Router Load balancer */
 resource "aws_elb" "router" {
   name = "tsuru-router-elb"
-  subnets = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
+  subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
   listener {
     instance_port = 80
