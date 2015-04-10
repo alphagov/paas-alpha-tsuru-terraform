@@ -7,3 +7,11 @@ resource "aws_route53_record" "router" {
   records = ["${aws_elb.router.dns_name}"]
 }
 
+/* Gandalf A record */
+resource "aws_route53_record" "gandalf" {
+  zone_id = "ZAO40KKT7J2PB"
+  name = "gandalf.tsuru.paas.alphagov.co.uk"
+  type = "A"
+  ttl = "60"
+  records = ["${aws_instance.gandalf.public_ip}"]
+}
