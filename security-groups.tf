@@ -3,15 +3,15 @@ resource "aws_security_group" "default" {
   name = "default-tsuru"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port   = "0"
     to_port     = "0"
     protocol    = "-1"
     self        = true
   }
-  
-  tags { 
+
+  tags {
     Name = "tsuru-default-vpc"
   }
 }
@@ -22,16 +22,16 @@ resource "aws_security_group" "nat" {
   name = "nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
     cidr_blocks = ["80.194.77.0/24"]
   }
- 
-  tags { 
-    Name = "tsuru-nat" 
+
+  tags {
+    Name = "tsuru-nat"
   }
 }
 
@@ -58,7 +58,7 @@ resource "aws_security_group" "web" {
   name = "web-tsuru"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port = 80
     to_port   = 80
@@ -79,8 +79,28 @@ resource "aws_security_group" "web" {
     protocol  = "tcp"
     cidr_blocks = ["80.194.77.0/24"]
   }
-  
-  tags { 
-    Name = "tsuru-web" 
+
+  tags {
+    Name = "tsuru-web"
   }
 }
+
+/* Security group for the postgres */
+resource "aws_security_group" "postgres" {
+  name = "postgres-tsuru"
+  description = "Security group for postgres server"
+  vpc_id = "${aws_vpc.default.id}"
+
+
+  ingress {
+    from_port = 5432
+    to_port   = 5432
+    protocol  = "tcp"
+    cidr_blocks = ["80.194.77.0/24"]
+  }
+
+  tags {
+    Name = "tsuru-postgres"
+  }
+}
+
