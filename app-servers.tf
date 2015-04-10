@@ -26,6 +26,20 @@ resource "aws_instance" "gandalf" {
   }
 }
 
+/* API external Load balancer */
+resource "aws_elb" "api-ext" {
+  name = "tsuru-api-elb-ext"
+  subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
+  instances = [ "${aws_instance.tsuru-app.0.id}" ]
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  listener {
+    instance_port = 8080
+    instance_protocol = "http"
+    lb_port = 8080
+    lb_protocol = "http"
+  }
+}
+
 /* Router Launch configuration */
 resource "aws_launch_configuration" "router" {
   name = "tsuru_router_config"
