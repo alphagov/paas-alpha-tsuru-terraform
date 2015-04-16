@@ -1,0 +1,10 @@
+#cloud-config
+# Cloud config for docker-registry servers
+
+runcmd:
+  # Install Tsuru repos
+  - sudo apt-add-repository ppa:tsuru/ppa -y
+  - sudo apt-get update
+  - sudo apt-get install python-software-properties -y
+
+output: {all: '| tee -a /var/log/cloud-init-output.log'}
