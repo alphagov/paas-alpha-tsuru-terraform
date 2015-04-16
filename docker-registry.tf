@@ -33,12 +33,13 @@ resource "aws_autoscaling_group" "docker-registry" {
 /* Docker-registry internal Load balancer */
 resource "aws_elb" "docker-registry" {
   name = "docker-registry"
-  subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  subnets = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
+  security_groups = ["${aws_security_group.default.id}"]
+  internal = true
   listener {
-    instance_port = 5000
+    instance_port = 6000
     instance_protocol = "tcp"
-    lb_port = 5000
+    lb_port = 6000
     lb_protocol = "tcp"
   }
 }
