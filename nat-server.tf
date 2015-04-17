@@ -2,7 +2,7 @@
 resource "aws_instance" "nat" {
   ami = "${lookup(var.nat_ami, var.region)}"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.public.id}"
+  subnet_id = "${aws_subnet.public1.id}"
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.nat.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   source_dest_check = false
