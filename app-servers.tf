@@ -38,6 +38,13 @@ resource "aws_elb" "api-ext" {
     lb_port = 8080
     lb_protocol = "http"
   }
+  listener {
+    instance_port = 8080
+    instance_protocol = "http"
+    lb_port = 443
+    lb_protocol = "https"
+    ssl_certificate_id = "${var.api_ssl_certificate_id}"
+  }
 }
 
 /* API internal Load balancer */
