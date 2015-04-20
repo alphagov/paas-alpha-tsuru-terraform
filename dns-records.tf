@@ -54,7 +54,7 @@ resource "aws_route53_record" "nat" {
 
 
 /* Docker-registry internal CNAME record */
-resource "aws_route53_record" "api-internal" {
+resource "aws_route53_record" "docker-registry" {
   zone_id = "ZAO40KKT7J2PB"
   name = "docker-registry.tsuru.paas.alphagov.co.uk"
   type = "CNAME"
