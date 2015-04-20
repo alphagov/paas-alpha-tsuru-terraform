@@ -51,12 +51,14 @@ resource "aws_route53_record" "nat" {
   ttl = "60"
   records = ["${aws_instance.nat.public_ip}"]
 }
-/* Docker-registry A record */
-resource "aws_route53_record" "docker-registry" {
+
+
+/* Docker-registry internal CNAME record */
+resource "aws_route53_record" "api-internal" {
   zone_id = "ZAO40KKT7J2PB"
   name = "docker-registry.tsuru.paas.alphagov.co.uk"
-  type = "A"
+  type = "CNAME"
   ttl = "60"
-  records = ["${aws_instance.docker-registry.private_ip}"]
+  records = ["${aws_instance.docker-registry.dns_name}"]
 }
 
