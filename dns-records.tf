@@ -51,3 +51,12 @@ resource "aws_route53_record" "nat" {
   ttl = "60"
   records = ["${aws_instance.nat.public_ip}"]
 }
+/* Docker-registry A record */
+resource "aws_route53_record" "docker-registry" {
+  zone_id = "ZAO40KKT7J2PB"
+  name = "docker-registry.tsuru.paas.alphagov.co.uk"
+  type = "A"
+  ttl = "60"
+  records = ["${aws_instance.docker-registry.private_ip}"]
+}
+
