@@ -52,3 +52,8 @@ variable "nat_ami" {
     eu-central-1 = "ami-a8221fb5"
   }
 }
+
+variable "api_ssl_certificate_id" {
+  description = "SSL Certificate for Tsuru API"
+  default = "arn:aws:iam::988997429095:server-certificate/wildcard_tsuru_paas_alphagov" 
+}
