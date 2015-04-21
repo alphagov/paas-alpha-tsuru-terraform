@@ -85,13 +85,11 @@ resource "aws_autoscaling_group" "router" {
   force_delete = true
   launch_configuration = "${aws_launch_configuration.router.name}"
   load_balancers = ["${aws_elb.router.name}"]
-  /* To be added after v0.4.0
   tag = {
     key = "Name"
     value = "tsuru-app-router"
     propagate_at_launch = true
   }
-  */
 }
 
 /* Router Load balancer */
