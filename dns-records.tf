@@ -7,13 +7,33 @@ resource "aws_route53_record" "router" {
   records = ["${aws_elb.router.dns_name}"]
 }
 
+resource "aws_route53_record" "sslproxy" {
+  zone_id = "ZAO40KKT7J2PB"
+  name = "proxy.tsuru.paas.alphagov.co.uk"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.tsuru-sslproxy-elb.dns_name}"]
+}
+
+/* Internal Router CNAME record */
+resource "aws_route53_record" "router-int" {
+  zone_id = "Z3OIOPK20MYIOI"
+  name = "hipache-int.tsuru.paas.alphagov.co.uk"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.router-int.dns_name}"]
+}
+
 /* Application router wildcard record */
 resource "aws_route53_record" "wildcard" {
   zone_id = "ZAO40KKT7J2PB"
   name = "*.hipache.tsuru.paas.alphagov.co.uk"
   type = "CNAME"
   ttl = "60"
-  records = ["${aws_route53_record.router.name}"]
+  /* enable this to talk to the hipache router directly (HTTP only)
+  records = ["${aws_route53_record.router.name}"] */
+  /* enable this to talk to the SSL offload proxy (ngnix, HTTP+HTTPS) */
+  records = ["${aws_route53_record.sslproxy.name}"]
 }
 
 /* API external CNAME record */

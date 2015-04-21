@@ -84,7 +84,7 @@ resource "aws_autoscaling_group" "router" {
   desired_capacity = 2
   force_delete = true
   launch_configuration = "${aws_launch_configuration.router.name}"
-  load_balancers = ["${aws_elb.router.name}"]
+  load_balancers = ["${aws_elb.router.name}", "${aws_elb.router-int.name}"]
   tag = {
     key = "Name"
     value = "tsuru-app-router"
@@ -92,7 +92,7 @@ resource "aws_autoscaling_group" "router" {
   }
 }
 
-/* Router Load balancer */
+/* Router External Load balancer */
 resource "aws_elb" "router" {
   name = "tsuru-router-elb"
   subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
@@ -104,3 +104,18 @@ resource "aws_elb" "router" {
     lb_protocol = "http"
   }
 }
+
+/* Router Internal Load balancer */
+resource "aws_elb" "router-int" {
+  name = "tsuru-router-elb-int"
+  subnets = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
+  internal = true
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web-int.id}"]
+  listener {
+    instance_port = 80
+    instance_protocol = "http"
+    lb_port = 80
+    lb_protocol = "http"
+  }
+}
+

@@ -36,6 +36,16 @@ variable "private_subnet2_cidr" {
   default     = "10.128.3.0/24"
 }
 
+variable "sslproxy_subnet1_cidr" {
+  description = "CIDR for sslproxy subnet 1"
+  default     = "10.128.5.0/24"
+}
+
+variable "sslproxy_subnet2_cidr" {
+  description = "CIDR for sslproxy subnet 2"
+  default     = "10.128.7.0/24"
+}
+
 /* Ubuntu 14.04 amis by region */
 variable "amis" {
   description = "Base AMI to launch the instances with"
