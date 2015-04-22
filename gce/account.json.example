@@ -1,0 +1,7 @@
+{
+  "private_key_id": "deadb33f",
+  "private_key": "-----BEGIN PRIVATE KEY-----lotsofasciigibberish-----END PRIVATE KEY-----\n",
+  "client_email": "someuuid@developer.gserviceaccount.com",
+  "client_id": "someuuid.apps.googleusercontent.com",
+  "type": "service_account"
+}
