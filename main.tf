@@ -33,7 +33,7 @@ resource "google_compute_instance" "default" {
     }
 
     service_account {
-        scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+        scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
     }
 
     depends_on = [ "google_compute_network.default" ]
