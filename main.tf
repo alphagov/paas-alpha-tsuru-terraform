@@ -37,19 +37,21 @@ resource "google_compute_instance" "default" {
     }
 }
 
-/* Define a health check for app servers */
+/* Load Balancer */
 resource "google_compute_http_health_check" "default" {
     name = "http-check"
     request_path = "/"
     check_interval_sec = 1
     timeout_sec = 1
 }
-
-/* Load Balancer */
 resource "google_compute_target_pool" "default" {
     name = "tsuru-test-lb"
     instances = [ "${google_compute_instance.default.*.self_link}" ]
     health_checks = [ "${google_compute_http_health_check.default.name}" ]
 }
-
+resource "google_compute_forwarding_rule" "default" {
+    name = "tsuru-test-lb"
+    target = "${google_compute_target_pool.default.self_link}"
+    port_range = 80
+}
 
