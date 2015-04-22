@@ -18,22 +18,22 @@ variable "gce_zone" {
   default = "europe-west1-b"
 }
 
+variable "ssh_key_path" {
+  description = "Path to the ssh key to use"
+  default = "../ssh/insecure-deployer.pub"
+}
+
 variable "user" {
   description = "User account to set up SSH keys for"
-  default = "jim"
+  default = "ubuntu"
 }
 
-variable "gce_net_name" {
-  description = "Name for the network we want"
-  default     = "tsuru-tform"
+variable "os_image" {
+  description = "OS image to boot VMs using"
+  default = "ubuntu-1404-trusty-v20150316"
 }
 
-variable "gce_net_range" {
-  description = "CIDR for network"
-  default     = "10.20.30.0/24"
-}
-
-variable "public_subnet_cidr" {
+variable "public_subnet1_cidr" {
   description = "CIDR for public subnet"
   default     = "10.128.0.0/24"
 }
