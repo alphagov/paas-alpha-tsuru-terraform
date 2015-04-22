@@ -48,8 +48,7 @@ resource "google_compute_http_health_check" "default" {
 /* Load Balancer */
 resource "google_compute_target_pool" "default" {
     name = "tsuru-test-lb"
-    # Horrible hack on this intsnaces line below as terraform lacks the ability to iterate over a list.
-    instances = [ "${var.gce_zone}/tsuru-app-0", "${var.gce_zone}/tsuru-app-1", "${var.gce_zone}/tsuru-app-2" ]
+    instances = [ "${google_compute_instance.default.*.self_link}" ]
     health_checks = [ "${google_compute_http_health_check.default.name}" ]
 }
 
