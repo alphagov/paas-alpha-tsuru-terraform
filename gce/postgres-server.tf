@@ -8,9 +8,6 @@ resource "google_compute_instance" "postgres" {
     }
     network_interface {
         network = "${google_compute_network.private1.name}"
-        access_config {
-            #nat_ip = ("tsuru-app-${count.index}")
-        }
     }
     metadata {
         sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
