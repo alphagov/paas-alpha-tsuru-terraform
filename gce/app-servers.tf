@@ -3,7 +3,7 @@ resource "google_compute_instance" "tsuru-app" {
   count = 2
   name = "tsuru-app-${count.index}"
   machine_type = "n1-standard-1"
-  zone = "${var.gce_zone}"
+  zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
     image = "${var.os_image}"
   }
@@ -24,7 +24,7 @@ resource "google_compute_instance" "tsuru-app" {
 resource "google_compute_instance" "gandalf" {
   name = "tsuru-app-gandalf"
   machine_type = "n1-standard-1"
-  zone = "${var.gce_zone}"
+  zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
     image = "${var.os_image}"
   }
@@ -67,7 +67,7 @@ resource "google_compute_instance" "router" {
   count = 2
   name = "tsuru-router-${count.index}"
   machine_type = "n1-standard-1"
-  zone = "${var.gce_zone}"
+  zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
     image = "${var.os_image}"
   }
