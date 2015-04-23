@@ -7,7 +7,7 @@ resource "google_compute_instance" "jumpbox" {
         image = "${var.os_image}"
     }
     network_interface {
-        network = "${google_compute_network.public1.name}"
+        network = "${google_compute_network.network1.name}"
         access_config {
         }
     }
@@ -17,6 +17,6 @@ resource "google_compute_instance" "jumpbox" {
     service_account {
         scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
     }
-    depends_on = [ "google_compute_network.public1" ]
+    depends_on = [ "google_compute_network.network1" ]
 }
 
