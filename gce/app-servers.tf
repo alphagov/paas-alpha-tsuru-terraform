@@ -17,7 +17,7 @@ resource "google_compute_instance" "tsuru-app" {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
   depends_on = [ "google_compute_network.network1" ]
-  tags = [ "private" ]
+  tags = [ "private", "web" ]
 }
 
 /* Gandalf server */
@@ -73,7 +73,7 @@ resource "google_compute_instance" "router" {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
   depends_on = [ "google_compute_network.network1" ]
-  tags = [ "private" ]
+  tags = [ "private", "web" ]
 }
 
 /* API load balancer */
