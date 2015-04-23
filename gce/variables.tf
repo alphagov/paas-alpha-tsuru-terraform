@@ -37,3 +37,8 @@ variable "network1_cidr" {
   description = "CIDR for network1"
   default     = "10.128.0.0/24"
 }
+
+variable "dns_zone_name" {
+  description = "Friendly name of DNS zone"
+  default     = "tsuru2"
+}

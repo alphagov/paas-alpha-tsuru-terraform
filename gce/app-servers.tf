@@ -40,6 +40,10 @@ resource "google_compute_instance" "gandalf" {
   }
   depends_on = [ "google_compute_network.network1" ]
   tags = [ "public", "gandalf" ]
+
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} gandalf.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
+  }
 }
 
 /* API load balancer */
@@ -52,6 +56,10 @@ resource "google_compute_forwarding_rule" "api" {
   name = "tsuru-api-lb"
   target = "${google_compute_target_pool.api.self_link}"
   port_range = 8080
+
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} api.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.api.ip_address}"
+  }
 }
 
 /* Routers */
@@ -86,4 +94,11 @@ resource "google_compute_forwarding_rule" "router" {
   name = "tsuru-router-lb"
   target = "${google_compute_target_pool.router.self_link}"
   port_range = 80
+
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} hipache.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.router.ip_address}"
+  }
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} *.hipache.tsuru2.paas.alphagov.co.uk 60 CNAME hipache.tsuru2.paas.alphagov.co.uk."
+  }
 }
