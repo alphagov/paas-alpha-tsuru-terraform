@@ -39,7 +39,7 @@ resource "google_compute_instance" "gandalf" {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
   depends_on = [ "google_compute_network.network1" ]
-  tags = [ "public" ]
+  tags = [ "public", "gandalf" ]
 }
 
 /* API load balancer */
