@@ -40,6 +40,10 @@ resource "google_compute_instance" "gandalf" {
   }
   depends_on = [ "google_compute_network.network1" ]
   tags = [ "public", "gandalf" ]
+
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} gandalf.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
+  }
 }
 
 /* API load balancer */
