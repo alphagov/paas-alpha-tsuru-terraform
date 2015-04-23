@@ -2,7 +2,7 @@
 resource "google_compute_instance" "docker-registry" {
   name = "docker-registry"
   machine_type = "n1-standard-1"
-  zone = "${var.gce_zone}"
+  zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
     image = "${var.os_image}"
   }
