@@ -37,5 +37,5 @@ resource "google_compute_instance" "nat" {
             "echo 'net.ipv4.conf.eth0.send_redirects = 0' | sudo tee -a /etc/sysctl.d/nat.conf"
         ]
     }
-    tags = [ "public" ]
+    tags = [ "public", "nat" ]
 }
