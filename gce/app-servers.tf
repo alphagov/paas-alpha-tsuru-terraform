@@ -52,6 +52,10 @@ resource "google_compute_forwarding_rule" "api" {
   name = "tsuru-api-lb"
   target = "${google_compute_target_pool.api.self_link}"
   port_range = 8080
+
+  provisioner "local-exec" {
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} api.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.api.ip_address}"
+  }
 }
 
 /* Routers */
