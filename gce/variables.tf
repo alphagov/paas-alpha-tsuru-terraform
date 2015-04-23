@@ -33,12 +33,7 @@ variable "os_image" {
   default = "ubuntu-1404-trusty-v20150316"
 }
 
-variable "public_subnet1_cidr" {
-  description = "CIDR for public subnet"
+variable "network1_cidr" {
+  description = "CIDR for network1"
   default     = "10.128.0.0/24"
-}
-
-variable "private_subnet1_cidr" {
-  description = "CIDR for private subnet 1"
-  default     = "10.128.1.0/24"
 }
