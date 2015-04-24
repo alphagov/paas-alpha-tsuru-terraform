@@ -2,3 +2,4 @@ aws/terraform.tfstate*
 aws/ssh/
 gce/terraform.tfstate*
 gce/ssh/
+gce/account.json
