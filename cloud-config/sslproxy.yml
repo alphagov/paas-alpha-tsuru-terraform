@@ -1,0 +1,8 @@
+# Cloud config for nginx SSL proxy
+
+runcmd:
+  # Install Tsuru repos
+  - sudo apt-get update 
+  - sudo apt-get install nginx -y
+
+output: {all: '| tee -a /var/log/cloud-init-output.log'}
