@@ -17,7 +17,6 @@ resource "google_compute_instance" "nat" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  depends_on = [ "google_compute_network.network1" ]
 
   can_ip_forward = true
   connection {

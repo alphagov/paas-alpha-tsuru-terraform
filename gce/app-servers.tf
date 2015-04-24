@@ -16,7 +16,6 @@ resource "google_compute_instance" "tsuru-app" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  depends_on = [ "google_compute_network.network1" ]
   tags = [ "private", "web" ]
 }
 
@@ -38,7 +37,6 @@ resource "google_compute_instance" "gandalf" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  depends_on = [ "google_compute_network.network1" ]
   tags = [ "public", "gandalf" ]
 
   provisioner "local-exec" {
@@ -80,7 +78,6 @@ resource "google_compute_instance" "router" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  depends_on = [ "google_compute_network.network1" ]
   tags = [ "private", "web" ]
 }
 

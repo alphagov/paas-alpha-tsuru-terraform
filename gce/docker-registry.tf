@@ -15,7 +15,6 @@ resource "google_compute_instance" "docker-registry" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  depends_on = [ "google_compute_network.network1" ]
   tags = [ "private" ]
 
   provisioner "local-exec" {
