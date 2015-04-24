@@ -18,6 +18,14 @@ ttl=$3
 record_type=$4
 value=$5
 
+# If there are already changes pending when we start our transaction, it will fail
+# with a code 412 - Prerequisites not met error. Should that happen, then we need
+# to restart the whole transaction from the beginning, so we wrap the whole thing
+# in a while loop.
+completed=0
+while [ $completed -eq 0 ]
+do
+
 # Generate a unique transaction file name
 # milliseconds-since-epoch with random uuid suffix
 transaction_file=`date +%s%3N-``uuidgen`
@@ -48,7 +56,20 @@ gcloud dns record-sets transaction add \
   --type $record_type \
   "$value"
 
-# Execute the transaction on GCE
-gcloud dns record-sets transaction execute \
-  --transaction-file $transaction_file \
-  -z $gce_friendly_name
+
+# Catch if we get code: 412 returned when we try to execute the transaction, and if we do..
+# then we go right back to the start of the loop
+
+if result=$((gcloud dns record-sets transaction execute --transaction-file $transaction_file -z $gce_friendly_name) 2>&1); then
+  echo "DNS change applied successfully"
+  completed=1
+else
+  if [[ $result == *"code: 412"* ]]; then
+    echo "Got a 412 error - retry"
+    gcloud dns record-sets transaction abort --transaction-file $transaction_file -z $gce_friendly_name
+  else
+    echo "Change failed to apply"
+    exit 1
+  fi
+fi
+done
