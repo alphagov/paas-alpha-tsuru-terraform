@@ -2,8 +2,8 @@ output "app.0.ip" {
   value = "${aws_instance.tsuru-app.0.private_ip}"
 }
 
-output "app.1.ip" {
-  value = "${aws_instance.tsuru-app.1.private_ip}"
+output "docker.private.ip" {
+  value = "${aws_instance.tsuru-docker.private_ip}"
 }
 
 output "gandalf.private.ip" {
