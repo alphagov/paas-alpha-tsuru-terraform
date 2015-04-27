@@ -1,9 +1,5 @@
-output "app.0.ip" {
-  value = "${google_compute_instance.tsuru-app.0.network_interface.0.address}"
-}
-
-output "app.1.ip" {
-  value = "${google_compute_instance.tsuru-app.1.network_interface.0.address}"
+output "app.*.private_ip" {
+  value = "${join(",", google_compute_instance.tsuru-app.*.network_interface.0.address)}"
 }
 
 output "docker-registry.private_ip" {
