@@ -23,53 +23,51 @@ value=$5
 # to restart the whole transaction from the beginning, so we wrap the whole thing
 # in a while loop.
 completed=0
-while [ $completed -eq 0 ]
-do
+while [ $completed -eq 0 ]; do
+  # Generate a unique transaction file name
+  # milliseconds-since-epoch with random uuid suffix
+  transaction_file=`date +%s%3N-``uuidgen`
 
-# Generate a unique transaction file name
-# milliseconds-since-epoch with random uuid suffix
-transaction_file=`date +%s%3N-``uuidgen`
+  # Start a new transaction
+  trap "gcloud dns record-sets transaction abort --transaction-file $transaction_file -z $gce_friendly_name" ERR
+  gcloud dns record-sets transaction start --transaction-file $transaction_file -z "$gce_friendly_name"
 
-# Start a new transaction
-trap "gcloud dns record-sets transaction abort --transaction-file $transaction_file -z $gce_friendly_name" ERR
-gcloud dns record-sets transaction start --transaction-file $transaction_file -z "$gce_friendly_name"
+  # Firstly let's check if the record already exists
+  record_line=$(gcloud dns record-sets --zone "$1" list | awk '$1=="'$dns_record_name'."')
 
-# Firstly let's check if the record already exists
-record_line=$(gcloud dns record-sets --zone "$1" list | awk '$1=="'$dns_record_name'."')
+  if [ -n "$record_line" ] ; then
+    echo "Need to first remove record: ${dns_record_name}"
+    gcloud dns record-sets transaction remove \
+      --transaction-file $transaction_file \
+      -z $gce_friendly_name \
+      --name $(echo $record_line | awk {'print $1'}) \
+      --ttl $(echo $record_line | awk {'print $3'}) \
+      --type $(echo $record_line | awk {'print $2'}) \
+      $(echo $record_line | awk {'print $4'})
+  fi
 
-if [ -n "$record_line" ] ; then
-  echo "Need to first remove record: ${dns_record_name}"
-  gcloud dns record-sets transaction remove \
+  gcloud dns record-sets transaction add \
     --transaction-file $transaction_file \
     -z $gce_friendly_name \
-    --name $(echo $record_line | awk {'print $1'}) \
-    --ttl $(echo $record_line | awk {'print $3'}) \
-    --type $(echo $record_line | awk {'print $2'}) \
-    $(echo $record_line | awk {'print $4'})
-fi
-
-gcloud dns record-sets transaction add \
-  --transaction-file $transaction_file \
-  -z $gce_friendly_name \
-  --name $dns_record_name \
-  --ttl $ttl \
-  --type $record_type \
-  "$value"
+    --name $dns_record_name \
+    --ttl $ttl \
+    --type $record_type \
+    "$value"
 
 
-# Catch if we get code: 412 returned when we try to execute the transaction, and if we do..
-# then we go right back to the start of the loop
+  # Catch if we get code: 412 returned when we try to execute the transaction, and if we do..
+  # then we go right back to the start of the loop
 
-if result=$((gcloud dns record-sets transaction execute --transaction-file $transaction_file -z $gce_friendly_name) 2>&1); then
-  echo "DNS change applied successfully"
-  completed=1
-else
-  if [[ $result == *"code: 412"* ]]; then
-    echo "Got a 412 error - retry"
-    gcloud dns record-sets transaction abort --transaction-file $transaction_file -z $gce_friendly_name
+  if result=$((gcloud dns record-sets transaction execute --transaction-file $transaction_file -z $gce_friendly_name) 2>&1); then
+    echo "DNS change applied successfully"
+    completed=1
   else
-    echo "Change failed to apply"
-    exit 1
+    if [[ $result == *"code: 412"* ]]; then
+      echo "Got a 412 error - retry"
+      gcloud dns record-sets transaction abort --transaction-file $transaction_file -z $gce_friendly_name
+    else
+      echo "Change failed to apply"
+      exit 1
+    fi
   fi
-fi
 done
