@@ -45,10 +45,17 @@ resource "google_compute_instance" "gandalf" {
 }
 
 /* API load balancer */
+resource "google_compute_http_health_check" "api" {
+  name = "tsuru-api"
+  port = 8080
+  request_path = "/info"
+  check_interval_sec = 1
+  timeout_sec = 1
+}
 resource "google_compute_target_pool" "api" {
   name = "tsuru-api-lb"
   instances = [ "${google_compute_instance.tsuru-app.0.self_link}" ]
-  health_checks = [ "${google_compute_http_health_check.http-check.name}" ]
+  health_checks = [ "${google_compute_http_health_check.api.name}" ]
 }
 resource "google_compute_forwarding_rule" "api" {
   name = "tsuru-api-lb"
