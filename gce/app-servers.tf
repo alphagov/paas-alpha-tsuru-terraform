@@ -95,7 +95,4 @@ resource "google_compute_forwarding_rule" "router" {
   provisioner "local-exec" {
     command = "./ensure_gce_dns.sh ${var.dns_zone_name} hipache.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.router.ip_address}"
   }
-  provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} *.hipache.tsuru2.paas.alphagov.co.uk 60 CNAME hipache.tsuru2.paas.alphagov.co.uk."
-  }
 }
