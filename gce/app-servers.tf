@@ -47,7 +47,7 @@ resource "google_compute_instance" "gandalf" {
 /* API load balancer */
 resource "google_compute_target_pool" "api" {
   name = "tsuru-api-lb"
-  instances = [ "${google_compute_instance.tsuru-app.*.self_link}" ]
+  instances = [ "${google_compute_instance.tsuru-app.0.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.http-check.name}" ]
 }
 resource "google_compute_forwarding_rule" "api" {
