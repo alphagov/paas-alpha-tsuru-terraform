@@ -26,10 +26,6 @@ output "postgres.private_ip" {
   value = "${aws_instance.postgres.private_ip}"
 }
 
-output "router.*.private_ip" {
-  value = "${join(",", aws_instance.router.*.private_ip)}"
-}
-
 output "elb.hostname" {
   value = "${aws_elb.router.dns_name}"
 }
