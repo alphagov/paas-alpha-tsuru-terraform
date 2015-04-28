@@ -1,2 +1,2 @@
-terraform.tfstate*
-ssh/
+aws/terraform.tfstate*
+aws/ssh/
