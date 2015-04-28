@@ -5,6 +5,7 @@ resource "google_compute_instance" "docker-registry" {
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
     image = "${var.os_image}"
+    size = 100
   }
   network_interface {
     network = "${google_compute_network.network1.name}"
