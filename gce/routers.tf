@@ -23,7 +23,6 @@ resource "google_compute_instance" "router" {
 resource "google_compute_target_pool" "router" {
   name = "tsuru-router-lb"
   instances = [ "${google_compute_instance.router.*.self_link}" ]
-  health_checks = [ "${google_compute_http_health_check.http-check.name}" ]
 }
 resource "google_compute_forwarding_rule" "router" {
   name = "tsuru-router-lb"
