@@ -47,7 +47,7 @@ resource "aws_route53_record" "api-external" {
 
 /* API internal CNAME record */
 resource "aws_route53_record" "api-internal" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "Z3OIOPK20MYIOI"
   name = "internal.api.tsuru.paas.alphagov.co.uk"
   type = "CNAME"
   ttl = "60"
@@ -71,9 +71,10 @@ resource "aws_route53_record" "nat" {
   ttl = "60"
   records = ["${aws_instance.nat.public_ip}"]
 }
+
 /* Docker-registry A record */
 resource "aws_route53_record" "docker-registry" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "Z3OIOPK20MYIOI"
   name = "docker-registry.tsuru.paas.alphagov.co.uk"
   type = "A"
   ttl = "60"
