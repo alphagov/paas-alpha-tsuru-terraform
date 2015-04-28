@@ -10,6 +10,8 @@ You need the cloud provider credentials. These will be entered on the command li
 
 ## Notes
 
+Change into one of the provider sub-directories before executing `terraform` commands.
+
 For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/commands/index.html).
 
 We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console.
