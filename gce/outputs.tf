@@ -1,3 +1,7 @@
+output "api.*.private_ip" {
+  value = "${join(",", google_compute_instance.api.*.network_interface.0.address)}"
+}
+
 output "app.0.private_ip" {
   value = "${google_compute_instance.tsuru-app.0.network_interface.0.address}"
 }

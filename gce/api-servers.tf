@@ -1,7 +1,7 @@
 /* API server */
-resource "google_compute_instance" "tsuru-app" {
-  count = 1
-  name = "tsuru-app-${count.index}"
+resource "google_compute_instance" "api" {
+  count = 2
+  name = "tsuru-api-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -29,7 +29,7 @@ resource "google_compute_http_health_check" "api" {
 }
 resource "google_compute_target_pool" "api" {
   name = "tsuru-api-lb"
-  instances = [ "${google_compute_instance.tsuru-app.0.self_link}" ]
+  instances = [ "${google_compute_instance.api.*.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.api.name}" ]
 }
 resource "google_compute_forwarding_rule" "api" {
