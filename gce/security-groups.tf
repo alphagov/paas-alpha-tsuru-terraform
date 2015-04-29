@@ -48,7 +48,11 @@ resource "google_compute_firewall" "web" {
   description = "Security group for web that allows web traffic from internet"
   network = "${google_compute_network.network1.name}"
 
-  source_ranges = [ "80.194.77.90/32", "80.194.77.100/32" ]
+  source_ranges = [
+    "80.194.77.90/32", "80.194.77.100/32",
+    "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}",
+    "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}",
+  ]
   target_tags = [ "web" ]
 
   allow {
