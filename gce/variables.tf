@@ -35,7 +35,7 @@ variable "os_image" {
 
 variable "network1_cidr" {
   description = "CIDR for network1"
-  default     = "10.128.0.0/24"
+  default     = "10.129.0.0/24"
 }
 
 variable "dns_zone_name" {
