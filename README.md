@@ -8,6 +8,23 @@ You need an SSH key. The private key needs to be chmod to 600.
 
 You need the cloud provider credentials. These will be entered on the command line.
 
+### Extra requirements for GCE provisioning
+
+The terraform provider for GCE requires access to an 'account.json' file - this is available from GCE's web interface in the 'credentials' section.
+
+The GCE provider for Terraform does not currently have support for managing DNS records, and as such we have created a wrapper around Google's 'gcloud' command which allows us to create DNS records as part of a local-provisioner step. It is necessary to manually install the 'gcloud' command line utility and authenticate it before running Terraform for the first time.
+
+`$ curl https://sdk.cloud.google.com | bash`
+
+`$ gcloud components update`
+
+`$ gcloud auth activate-service-account --key-file ~/path/to/account.json`
+
+`$gcloud config set project <your_project_name>`
+
+Once the above steps are complete, performing a  `gcloud compute instances list` will confirm that authentication is working as expected.
+
+
 ## Notes
 
 Change into one of the provider sub-directories before executing `terraform` commands.
