@@ -26,7 +26,7 @@ resource "aws_security_group" "nat" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.0/24"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
  
   tags { 
@@ -44,7 +44,7 @@ resource "aws_security_group" "gandalf" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.0/24"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
 
   tags {
@@ -62,21 +62,21 @@ resource "aws_security_group" "web" {
     from_port = 80
     to_port   = 80
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.0/24"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
 
   ingress {
     from_port = 8080
     to_port   = 8080
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.0/24"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
 
   ingress {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.0/24"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
  
   tags { 
@@ -127,27 +127,14 @@ resource "aws_security_group" "sslproxy" {
     from_port = 80
     to_port   = 80
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.90/32"]
-  }
-  ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
-    cidr_blocks = ["80.194.77.100/32"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
 
   ingress {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["80.194.77.90/32"]
-  }
-
-  ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
-    cidr_blocks = ["80.194.77.100/32"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
   
   tags { 
