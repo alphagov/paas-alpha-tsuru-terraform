@@ -1,11 +1,13 @@
 /* Router Launch configuration */
 resource "aws_launch_configuration" "router" {
-  name = "tsuru_router_config"
   image_id = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   user_data = "${file(\"cloud-config/router.yml\")}"
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 /* Router Autoscaling Group */
