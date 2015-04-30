@@ -4,9 +4,6 @@ resource "aws_launch_configuration" "router" {
   instance_type = "t2.medium"
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 /* Router Autoscaling Group */
