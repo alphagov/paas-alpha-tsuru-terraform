@@ -15,7 +15,7 @@ resource "aws_launch_configuration" "router" {
 resource "aws_autoscaling_group" "router" {
   availability_zones = ["${var.region}a", "${var.region}b"]
   vpc_zone_identifier = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
-  name = "tsuru-router-asg"
+  name = "tsuru-router-asg-${var.env}"
   max_size = 5
   min_size = 2
   health_check_grace_period = 300
@@ -26,14 +26,14 @@ resource "aws_autoscaling_group" "router" {
   load_balancers = ["${aws_elb.router.name}", "${aws_elb.router-int.name}"]
   tag = {
     key = "Name"
-    value = "tsuru-app-router"
+    value = "tsuru-app-router-${var.env}"
     propagate_at_launch = true
   }
 }
 
 /* Router External Load balancer */
 resource "aws_elb" "router" {
-  name = "tsuru-router-elb"
+  name = "tsuru-router-elb-${var.env}"
   subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
   listener {
@@ -46,7 +46,7 @@ resource "aws_elb" "router" {
 
 /* Router Internal Load balancer */
 resource "aws_elb" "router-int" {
-  name = "tsuru-router-elb-int"
+  name = "tsuru-router-elb-int-${var.env}"
   subnets = ["${aws_subnet.private1.id}", "${aws_subnet.private2.id}"]
   internal = true
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web-int.id}"]

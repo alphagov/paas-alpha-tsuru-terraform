@@ -6,7 +6,7 @@ resource "aws_subnet" "sslproxy1" {
   map_public_ip_on_launch = false
   depends_on = ["aws_instance.nat"]
   tags { 
-    Name = "tsuru-sslproxy1"
+    Name = "tsuru-sslproxy1-${var.env}"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "sslproxy2" {
   map_public_ip_on_launch = false
   depends_on = ["aws_instance.nat"]
   tags {
-    Name = "tsuru-sslproxy2"
+    Name = "tsuru-sslproxy2-${var.env}"
   }
 }
 

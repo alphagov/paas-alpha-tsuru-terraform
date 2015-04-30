@@ -1,6 +1,6 @@
 /* Default security group */
 resource "aws_security_group" "default" {
-  name = "default-tsuru"
+  name = "default-tsuru-${var.env}"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
   vpc_id = "${aws_vpc.default.id}"
   
@@ -12,13 +12,13 @@ resource "aws_security_group" "default" {
   }
   
   tags { 
-    Name = "tsuru-default-vpc"
+    Name = "tsuru-default-${var.env}"
   }
 }
 
 /* Security group for the nat server */
 resource "aws_security_group" "nat" {
-  name = "nat-tsuru"
+  name = "nat-tsuru-${var.env}"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
   
@@ -30,13 +30,13 @@ resource "aws_security_group" "nat" {
   }
  
   tags { 
-    Name = "tsuru-nat" 
+    Name = "tsuru-nat-${var.env}"
   }
 }
 
 /* Security group for the Gandalf server */
 resource "aws_security_group" "gandalf" {
-  name = "tsuru-gandalf"
+  name = "tsuru-gandalf-${var.env}"
   description = "Security group for Gandalf instance that allows SSH access from internet"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -48,13 +48,13 @@ resource "aws_security_group" "gandalf" {
   }
 
   tags {
-    Name = "tsuru-gandalf"
+    Name = "tsuru-gandalf-${var.env}"
   }
 }
 
 /* Security group for the web */
 resource "aws_security_group" "web" {
-  name = "web-tsuru"
+  name = "web-tsuru-${var.env}"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
   
@@ -80,13 +80,13 @@ resource "aws_security_group" "web" {
   }
  
   tags { 
-    Name = "tsuru-web" 
+    Name = "tsuru-web-${var.env}"
   }
 }
 
 /* Security group for the web */
 resource "aws_security_group" "web-int" {
-  name = "web-int-tsuru"
+  name = "web-int-tsuru-${var.env}"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -113,13 +113,13 @@ resource "aws_security_group" "web-int" {
   } */
 
   tags { 
-    Name = "tsuru-web-int" 
+    Name = "tsuru-web-int-${var.env}"
   }
 }
 
 /* Security group for the sslproxy */
 resource "aws_security_group" "sslproxy" {
-  name = "tsuru-sslproxy"
+  name = "tsuru-sslproxy-${var.env}"
   description = "Security group for sslproxy/offloader feedind the tsuru router elb"
   vpc_id = "${aws_vpc.default.id}"
   
@@ -138,6 +138,6 @@ resource "aws_security_group" "sslproxy" {
   }
   
   tags { 
-    Name = "tsuru-sslproxy" 
+    Name = "tsuru-sslproxy-${var.env}"
   }
 }

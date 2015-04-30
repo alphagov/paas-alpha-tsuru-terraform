@@ -11,7 +11,7 @@ resource "aws_subnet" "public1" {
   map_public_ip_on_launch = true
   depends_on = ["aws_internet_gateway.default"]
   tags {
-    Name = "tsuru-public-subnet-1"
+    Name = "tsuru-public-subnet-1-${var.env}"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_subnet" "public2" {
   map_public_ip_on_launch = true
   depends_on = ["aws_internet_gateway.default"]
   tags {
-    Name = "tsuru-public-subnet-2"
+    Name = "tsuru-public-subnet-2-${var.env}"
   }
 }
 
