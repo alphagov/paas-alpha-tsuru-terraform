@@ -38,7 +38,7 @@ variable "network1_cidr" {
   default     = "10.129.0.0/24"
 }
 
-variable "dns_zone_name" {
-  description = "Friendly name of DNS zone"
+variable "dns_zone_id" {
+  description = "Google DNS zone identifier"
   default     = "tsuru2"
 }

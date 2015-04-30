@@ -19,6 +19,6 @@ resource "google_compute_instance" "gandalf" {
   tags = [ "public", "gandalf" ]
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} gandalf.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} gandalf.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
   }
 }

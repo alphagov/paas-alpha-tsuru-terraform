@@ -38,6 +38,6 @@ resource "google_compute_forwarding_rule" "api" {
   port_range = 8080
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} api.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.api.ip_address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} api.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.api.ip_address}"
   }
 }
