@@ -5,7 +5,6 @@ resource "aws_instance" "tsuru-docker" {
   subnet_id = "${aws_subnet.private1.id}"
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
-  user_data = "${file(\"cloud-config/app.yml\")}"
   tags = {
     Name = "tsuru-app-docker"
   }
