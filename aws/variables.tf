@@ -67,3 +67,8 @@ variable "api_ssl_certificate_id" {
   description = "SSL Certificate for Tsuru API"
   default = "arn:aws:iam::988997429095:server-certificate/wildcard_tsuru_paas_alphagov" 
 }
+
+variable "dns_zone_name" {
+  description = "Amazon Route53 DNS zone name"
+  default     = "tsuru.paas.alphagov.co.uk"
+}
