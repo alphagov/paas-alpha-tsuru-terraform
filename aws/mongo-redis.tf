@@ -1,6 +1,5 @@
-/* Legacy API server, MongoDB and Redis DB server */
-resource "aws_instance" "tsuru-app" {
-  count = 1
+/* MongoDB and Redis DB server */
+resource "aws_instance" "tsuru-db" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private1.id}"
