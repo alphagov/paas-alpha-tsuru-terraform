@@ -87,3 +87,8 @@ variable "registry_s3_bucketname" {
   description = "S3 Object Storage name for the registry"
   default = "mcp.registry.storage"  
 }
+
+variable "key_pair_name" {
+  description = "SSH Key Pair name to be used to launch EC2 instances"
+  default     = "deployer-tsuru-example"
+}
