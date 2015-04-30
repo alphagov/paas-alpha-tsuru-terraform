@@ -1,6 +1,6 @@
 /* Router CNAME record */
 resource "aws_route53_record" "router" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "hipache.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -8,7 +8,7 @@ resource "aws_route53_record" "router" {
 }
 
 resource "aws_route53_record" "sslproxy" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "proxy.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -17,7 +17,7 @@ resource "aws_route53_record" "sslproxy" {
 
 /* Internal Router CNAME record */
 resource "aws_route53_record" "router-int" {
-  zone_id = "Z3OIOPK20MYIOI"
+  zone_id = "${var.dns_zone_id_internal}"
   name = "hipache-int.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -26,7 +26,7 @@ resource "aws_route53_record" "router-int" {
 
 /* Application router wildcard record */
 resource "aws_route53_record" "wildcard" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "*.hipache.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -38,7 +38,7 @@ resource "aws_route53_record" "wildcard" {
 
 /* API external CNAME record */
 resource "aws_route53_record" "api-external" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "api.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -47,7 +47,7 @@ resource "aws_route53_record" "api-external" {
 
 /* API internal CNAME record */
 resource "aws_route53_record" "api-internal" {
-  zone_id = "Z3OIOPK20MYIOI"
+  zone_id = "${var.dns_zone_id_internal}"
   name = "internal.api.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
@@ -56,7 +56,7 @@ resource "aws_route53_record" "api-internal" {
 
 /* Gandalf A record */
 resource "aws_route53_record" "gandalf" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "gandalf.${var.dns_zone_name}"
   type = "A"
   ttl = "60"
@@ -65,7 +65,7 @@ resource "aws_route53_record" "gandalf" {
 
 /* NAT A record */
 resource "aws_route53_record" "nat" {
-  zone_id = "ZAO40KKT7J2PB"
+  zone_id = "${var.dns_zone_id_external}"
   name = "nat.${var.dns_zone_name}"
   type = "A"
   ttl = "60"
@@ -74,7 +74,7 @@ resource "aws_route53_record" "nat" {
 
 /* Docker-registry A record */
 resource "aws_route53_record" "docker-registry" {
-  zone_id = "Z3OIOPK20MYIOI"
+  zone_id = "${var.dns_zone_id_internal}"
   name = "docker-registry.${var.dns_zone_name}"
   type = "A"
   ttl = "60"
