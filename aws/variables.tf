@@ -6,6 +6,10 @@ variable "aws_secret_key" {
   description = "AWS secert access key"
 }
 
+variable "env" {
+  description = "Environment name"
+}
+
 variable "region"     { 
   description = "AWS region"
   default     = "eu-west-1"
@@ -81,4 +85,14 @@ variable "dns_zone_id_external" {
 variable "dns_zone_name" {
   description = "Amazon Route53 DNS zone name"
   default     = "tsuru.paas.alphagov.co.uk"
+}
+
+variable "registry_s3_bucketname" {
+  description = "S3 Object Storage name for the registry"
+  default = "mcp.registry.storage"  
+}
+
+variable "key_pair_name" {
+  description = "SSH Key Pair name to be used to launch EC2 instances"
+  default     = "deployer-tsuru-example"
 }
