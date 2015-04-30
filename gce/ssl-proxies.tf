@@ -29,10 +29,10 @@ resource "google_compute_address" "tsuru-sslproxy" {
   name = "tsuru-sslproxy"
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} proxy.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_address.tsuru-sslproxy.address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} proxy.${var.dns_zone_name} 60 A ${google_compute_address.tsuru-sslproxy.address}"
   }
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} *.hipache.tsuru2.paas.alphagov.co.uk 60 CNAME proxy.tsuru2.paas.alphagov.co.uk."
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} *.hipache.${var.dns_zone_name} 60 CNAME proxy.${var.dns_zone_name}."
   }
 }
 resource "google_compute_forwarding_rule" "tsuru-sslproxy-443" {

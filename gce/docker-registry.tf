@@ -19,6 +19,6 @@ resource "google_compute_instance" "docker-registry" {
   tags = [ "private" ]
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_name} docker-registry.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_instance.docker-registry.network_interface.0.address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_name} docker-registry.${var.dns_zone_name} 60 A ${google_compute_instance.docker-registry.network_interface.0.address}"
   }
 }
