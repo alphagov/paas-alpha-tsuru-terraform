@@ -42,3 +42,8 @@ variable "dns_zone_id" {
   description = "Google DNS zone identifier"
   default     = "tsuru2"
 }
+
+variable "dns_zone_name" {
+  description = "Google DNS zone name"
+  default     = "tsuru2.paas.alphagov.co.uk"
+}

@@ -30,6 +30,6 @@ resource "google_compute_forwarding_rule" "router" {
   port_range = 80
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} hipache.tsuru2.paas.alphagov.co.uk 60 A ${google_compute_forwarding_rule.router.ip_address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} hipache.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.router.ip_address}"
   }
 }
