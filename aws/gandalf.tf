@@ -6,7 +6,6 @@ resource "aws_instance" "gandalf" {
   associate_public_ip_address = true
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.gandalf.id}"]
   key_name = "${var.key_pair_name}"
-  user_data = "${file(\"cloud-config/app.yml\")}"
   tags = {
     Name = "tsuru-app-gandalf"
   }
