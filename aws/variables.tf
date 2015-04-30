@@ -82,3 +82,8 @@ variable "dns_zone_name" {
   description = "Amazon Route53 DNS zone name"
   default     = "tsuru.paas.alphagov.co.uk"
 }
+
+variable "registry_s3_bucketname" {
+  description = "S3 Object Storage name for the registry"
+  default = "mcp.registry.storage"  
+}

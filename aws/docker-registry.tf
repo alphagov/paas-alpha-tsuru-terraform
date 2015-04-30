@@ -15,3 +15,9 @@ resource "aws_instance" "docker-registry" {
     volume_size = 100
   }
 }
+
+resource "aws_s3_bucket" "registry-s3" {
+    bucket = "${var.registry_s3_bucketname}"
+    acl = "private"
+}
+
