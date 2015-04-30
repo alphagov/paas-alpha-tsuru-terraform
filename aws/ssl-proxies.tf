@@ -1,11 +1,13 @@
 /* SSL proxy Launch configuration */
 resource "aws_launch_configuration" "tsuru-sslproxy" {
-  name = "tsuru_sslproxy_config"
   image_id = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"
   security_groups = ["${aws_security_group.default.id}","${aws_security_group.sslproxy.id}"]
   key_name = "${aws_key_pair.deployer.key_name}"
   user_data = "${file(\"cloud-config/sslproxy.yml\")}"
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 /* SSL proxy Autoscaling Group */
