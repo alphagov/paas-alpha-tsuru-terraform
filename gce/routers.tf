@@ -1,7 +1,7 @@
 /* Routers */
 resource "google_compute_instance" "router" {
   count = 2
-  name = "tsuru-router-${count.index}"
+  name = "tsuru-router-${var.env}-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -21,15 +21,15 @@ resource "google_compute_instance" "router" {
 
 /* Router load balancer */
 resource "google_compute_target_pool" "router" {
-  name = "tsuru-router-lb"
+  name = "tsuru-router-lb-${var.env}"
   instances = [ "${google_compute_instance.router.*.self_link}" ]
 }
 resource "google_compute_forwarding_rule" "router" {
-  name = "tsuru-router-lb"
+  name = "tsuru-router-lb-${var.env}"
   target = "${google_compute_target_pool.router.self_link}"
   port_range = 80
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} hipache.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.router.ip_address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} hipache-${var.env}.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.router.ip_address}"
   }
 }

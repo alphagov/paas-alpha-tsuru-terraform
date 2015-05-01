@@ -18,6 +18,10 @@ variable "gce_zones" {
   default = "europe-west1-b,europe-west1-c,europe-west1-d"
 }
 
+variable "env" {
+  description = "Environment name"
+}
+
 variable "ssh_key_path" {
   description = "Path to the ssh key to use"
   default = "../ssh/insecure-deployer.pub"

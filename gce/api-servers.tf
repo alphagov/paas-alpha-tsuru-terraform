@@ -1,7 +1,7 @@
 /* API server */
 resource "google_compute_instance" "api" {
   count = 2
-  name = "tsuru-api-${count.index}"
+  name = "tsuru-api-${var.env}-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -21,23 +21,23 @@ resource "google_compute_instance" "api" {
 
 /* API load balancer */
 resource "google_compute_http_health_check" "api" {
-  name = "tsuru-api"
+  name = "tsuru-api-${var.env}"
   port = 8080
   request_path = "/info"
   check_interval_sec = 1
   timeout_sec = 1
 }
 resource "google_compute_target_pool" "api" {
-  name = "tsuru-api-lb"
+  name = "tsuru-api-lb-${var.env}"
   instances = [ "${google_compute_instance.api.*.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.api.name}" ]
 }
 resource "google_compute_forwarding_rule" "api" {
-  name = "tsuru-api-lb"
+  name = "tsuru-api-lb-${var.env}"
   target = "${google_compute_target_pool.api.self_link}"
   port_range = 8080
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} api.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.api.ip_address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} api-${var.env}.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.api.ip_address}"
   }
 }
