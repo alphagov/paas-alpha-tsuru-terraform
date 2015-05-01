@@ -1,7 +1,6 @@
-/* Legacy API server, MongoDB and Redis DB server */
-resource "google_compute_instance" "tsuru-app" {
-  count = 1
-  name = "tsuru-app-${var.env}-${count.index}"
+/* MongoDB and Redis DB server */
+resource "google_compute_instance" "db" {
+  name = "tsuru-db-${var.env}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {

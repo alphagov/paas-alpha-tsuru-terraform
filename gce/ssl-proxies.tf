@@ -1,5 +1,5 @@
 /* SSL proxy */
-resource "google_compute_instance" "tsuru-sslproxy" {
+resource "google_compute_instance" "sslproxy" {
   count = 2
   name = "tsuru-sslproxy-${var.env}-${count.index}"
   machine_type = "n1-standard-1"
@@ -22,7 +22,7 @@ resource "google_compute_instance" "tsuru-sslproxy" {
 /* SSL proxy load balancer */
 resource "google_compute_target_pool" "tsuru-sslproxy" {
   name = "tsuru-sslproxy-lb-${var.env}"
-  instances = [ "${google_compute_instance.tsuru-sslproxy.*.self_link}" ]
+  instances = [ "${google_compute_instance.sslproxy.*.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.http-check.name}" ]
 }
 resource "google_compute_address" "tsuru-sslproxy" {

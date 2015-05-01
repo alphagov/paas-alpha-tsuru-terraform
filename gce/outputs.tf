@@ -2,12 +2,12 @@ output "api.*.private_ip" {
   value = "${join(",", google_compute_instance.api.*.network_interface.0.address)}"
 }
 
-output "app.0.private_ip" {
-  value = "${google_compute_instance.tsuru-app.0.network_interface.0.address}"
+output "db.private_ip" {
+  value = "${google_compute_instance.db.network_interface.0.address}"
 }
 
 output "docker.private_ip" {
-  value = "${google_compute_instance.tsuru-docker.network_interface.0.address}"
+  value = "${google_compute_instance.docker.network_interface.0.address}"
 }
 
 output "docker-registry.private_ip" {
@@ -31,7 +31,7 @@ output "postgres.private_ip" {
 }
 
 output "sslproxy.*.private_ip" {
-  value = "${join(",", google_compute_instance.tsuru-sslproxy.*.network_interface.0.address)}"
+  value = "${join(",", google_compute_instance.sslproxy.*.network_interface.0.address)}"
 }
 
 output "router.*.private_ip" {

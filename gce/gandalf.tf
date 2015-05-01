@@ -1,6 +1,6 @@
 /* Gandalf server */
 resource "google_compute_instance" "gandalf" {
-  name = "tsuru-app-gandalf-${var.env}"
+  name = "tsuru-gandalf-${var.env}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
