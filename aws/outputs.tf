@@ -1,3 +1,7 @@
+output "api.*.ip" {
+  value = "${join(",", aws_instance.api.*.private_ip)}"
+}
+
 output "tsuru-db.ip" {
   value = "${aws_instance.tsuru-db.private_ip}"
 }
@@ -24,6 +28,14 @@ output "nat.ip" {
 
 output "postgres.private_ip" {
   value = "${aws_instance.postgres.private_ip}"
+}
+
+output "router.*.ip" {
+  value = "${join(",", aws_instance.router.*.private_ip)}"
+}
+
+output "sslproxy.*.ip" {
+  value = "${join(",", aws_instance.tsuru-sslproxy.*.private_ip)}"
 }
 
 output "elb.hostname" {
