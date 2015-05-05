@@ -1,24 +1,13 @@
-/* Private subnet1 */
-resource "aws_subnet" "private1" {
+/* Private subnets */
+resource "aws_subnet" "private" {
+  count             = 2
   vpc_id            = "${aws_vpc.default.id}"
-  cidr_block        = "${var.private_subnet1_cidr}"
-  availability_zone = "${var.region}a"
+  cidr_block        = "${lookup(var.private_cidrs, concat("zone", count.index))}"
+  availability_zone = "${lookup(var.zones, concat("zone", count.index))}"
   map_public_ip_on_launch = false
   depends_on = ["aws_instance.nat"]
   tags { 
-    Name = "${var.env}-tsuru-private1"
-  }
-}
-
-/* Private subnet2 */
-resource "aws_subnet" "private2" {
-  vpc_id            = "${aws_vpc.default.id}"
-  cidr_block        = "${var.private_subnet2_cidr}"
-  availability_zone = "${var.region}b"
-  map_public_ip_on_launch = false
-  depends_on = ["aws_instance.nat"]
-  tags {
-    Name = "${var.env}-tsuru-private2"
+    Name = "${var.env}-tsuru-private-${count.index}"
   }
 }
 
@@ -32,13 +21,8 @@ resource "aws_route_table" "private" {
 }
 
 /* Associate the routing table to private subnets */
-resource "aws_route_table_association" "private1" {
-  subnet_id = "${aws_subnet.private1.id}"
-  route_table_id = "${aws_route_table.private.id}"
-}
-
-/* Associate the routing table to private subnets */
-resource "aws_route_table_association" "private2" {
-  subnet_id = "${aws_subnet.private2.id}"
+resource "aws_route_table_association" "private" {
+  count = 2
+  subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
   route_table_id = "${aws_route_table.private.id}"
 }
