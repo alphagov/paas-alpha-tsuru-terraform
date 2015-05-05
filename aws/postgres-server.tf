@@ -6,6 +6,6 @@ resource "aws_instance" "postgres" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "tsuru-postgrest-${var.env}"
+    Name = "tsuru-postgres-${var.env}"
   }
 }
