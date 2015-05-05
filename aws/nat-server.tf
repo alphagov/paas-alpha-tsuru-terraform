@@ -7,7 +7,7 @@ resource "aws_instance" "nat" {
   key_name = "${var.key_pair_name}"
   source_dest_check = false
   tags = { 
-    Name = "tsuru-nat-${var.env}"
+    Name = "${var.env}-tsuru-nat"
   }
   connection {
     user = "ec2-user"

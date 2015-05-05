@@ -7,7 +7,7 @@ resource "aws_instance" "gandalf" {
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.gandalf.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "tsuru-gandalf-${var.env}"
+    Name = "${var.env}-tsuru-gandalf"
   }
 }
 

@@ -6,7 +6,7 @@ resource "aws_instance" "tsuru-db" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "tsuru-db-${var.env}"
+    Name = "${var.env}-tsuru-db"
   }
 }
 
