@@ -1,6 +1,6 @@
 /* Docker server */
 resource "google_compute_instance" "docker" {
-  name = "tsuru-docker-${var.env}"
+  name = "${var.env}-tsuru-docker"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {

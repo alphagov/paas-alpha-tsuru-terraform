@@ -1,6 +1,6 @@
 /* MongoDB and Redis DB server */
 resource "google_compute_instance" "db" {
-  name = "tsuru-db-${var.env}"
+  name = "${var.env}-tsuru-db"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {

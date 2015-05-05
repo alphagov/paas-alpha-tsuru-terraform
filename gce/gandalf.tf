@@ -1,6 +1,6 @@
 /* Gandalf server */
 resource "google_compute_instance" "gandalf" {
-  name = "tsuru-gandalf-${var.env}"
+  name = "${var.env}-tsuru-gandalf"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -19,6 +19,6 @@ resource "google_compute_instance" "gandalf" {
   tags = [ "public", "gandalf" ]
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} gandalf-${var.env}.${var.dns_zone_name} 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-gandalf.${var.dns_zone_name} 60 A ${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
   }
 }

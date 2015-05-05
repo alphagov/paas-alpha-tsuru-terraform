@@ -1,6 +1,6 @@
 /* Docker Registry */
 resource "google_compute_instance" "docker-registry" {
-  name = "docker-registry-${var.env}"
+  name = "${var.env}-docker-registry"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -19,6 +19,6 @@ resource "google_compute_instance" "docker-registry" {
   tags = [ "private" ]
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} docker-registry-${var.env}.${var.dns_zone_name} 60 A ${google_compute_instance.docker-registry.network_interface.0.address}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-docker-registry.${var.dns_zone_name} 60 A ${google_compute_instance.docker-registry.network_interface.0.address}"
   }
 }
