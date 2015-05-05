@@ -5,10 +5,9 @@ resource "aws_instance" "gandalf" {
   subnet_id = "${aws_subnet.public1.id}"
   associate_public_ip_address = true
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.gandalf.id}"]
-  key_name = "${aws_key_pair.deployer.key_name}"
-  user_data = "${file(\"cloud-config/app.yml\")}"
+  key_name = "${var.key_pair_name}"
   tags = {
-    Name = "tsuru-app-gandalf"
+    Name = "${var.env}-tsuru-gandalf"
   }
 }
 

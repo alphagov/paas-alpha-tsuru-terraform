@@ -6,7 +6,7 @@ resource "aws_subnet" "private1" {
   map_public_ip_on_launch = false
   depends_on = ["aws_instance.nat"]
   tags { 
-    Name = "tsuru-private1"
+    Name = "${var.env}-tsuru-private1"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "private2" {
   map_public_ip_on_launch = false
   depends_on = ["aws_instance.nat"]
   tags {
-    Name = "tsuru-private2"
+    Name = "${var.env}-tsuru-private2"
   }
 }
 
