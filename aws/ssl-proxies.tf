@@ -28,7 +28,7 @@ resource "aws_autoscaling_group" "tsuru-sslproxy-asg" {
 
 /* SSL proxy Load balancer */
 resource "aws_elb" "tsuru-sslproxy-elb" {
-  name = "${var.env}-${var.env}tsuru-sslproxy-elb"
+  name = "${var.env}-tsuru-sslproxy-elb"
   subnets = ["${aws_subnet.public1.id}", "${aws_subnet.public2.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.sslproxy.id}"]
   listener {
