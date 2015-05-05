@@ -94,14 +94,7 @@ resource "aws_security_group" "web-int" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["${aws_subnet.sslproxy1.cidr_block}"]
-  } 
-
-   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_subnet.sslproxy2.cidr_block}"]
+    cidr_blocks = ["${aws_subnet.sslproxy.*.cidr_block}"]
   } 
 
  /* bug of terraform 0.4.2 does not work with  security groups this way. Workarounds above.

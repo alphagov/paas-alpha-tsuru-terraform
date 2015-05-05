@@ -15,39 +15,41 @@ variable "region"     {
   default     = "eu-west-1"
 }
 
+variable "zones" {
+  description = "AWS availability zones"
+  default     = {
+    zone0 = "eu-west-1a"
+    zone1 = "eu-west-1b"
+  }
+}
+
 variable "vpc_cidr" {
   description = "CIDR for VPC"
   default     = "10.128.0.0/16"
 }
 
-variable "public_subnet1_cidr" {
-  description = "CIDR for public subnet"
-  default     = "10.128.0.0/24"
+variable "public_cidrs" {
+  description = "CIDR for public subnet indexed by AZ"
+  default     = {
+    zone0 = "10.128.0.0/24"
+    zone1 = "10.128.2.0/24"
+  }
 }
 
-variable "public_subnet2_cidr" {
-  description = "CIDR for public subnet"
-  default     = "10.128.2.0/24"
+variable "private_cidrs" {
+  description = "CIDR for private subnet indexed by AZ"
+  default     = {
+    zone0 = "10.128.1.0/24"
+    zone1 = "10.128.3.0/24"
+  }
 }
 
-variable "private_subnet1_cidr" {
-  description = "CIDR for private subnet 1"
-  default     = "10.128.1.0/24"
-}
-
-variable "private_subnet2_cidr" {
-  description = "CIDR for private subnet 2"
-  default     = "10.128.3.0/24"
-}
-
-variable "sslproxy_subnet1_cidr" {
-  description = "CIDR for sslproxy subnet 1"
-  default     = "10.128.5.0/24"
-}
-
-variable "sslproxy_subnet2_cidr" {
-  description = "CIDR for sslproxy subnet 2"
-  default     = "10.128.7.0/24"
+variable "sslproxy_cidrs" {
+  description = "CIDR for sslproxy subnet indexed by AZ"
+  default     = {
+    zone0 = "10.128.5.0/24"
+    zone1 = "10.128.7.0/24"
+  }
 }
 
 /* Ubuntu 14.04 amis by region */
