@@ -1,6 +1,6 @@
 /* Internal security group */
 resource "google_compute_firewall" "internal" {
-  name = "tsuru-internal"
+  name = "${var.env}-tsuru-internal"
   description = "Security group for internally routed traffic"
   network = "${google_compute_network.network1.name}"
 
@@ -14,7 +14,7 @@ resource "google_compute_firewall" "internal" {
 
 /* Security group for the nat server */
 resource "google_compute_firewall" "nat" {
-  name = "nat-tsuru"
+  name = "${var.env}-nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
   network = "${google_compute_network.network1.name}"
 
@@ -29,7 +29,7 @@ resource "google_compute_firewall" "nat" {
 
 /* Security group for the Gandalf server */
 resource "google_compute_firewall" "gandalf" {
-  name = "tsuru-gandalf"
+  name = "${var.env}-tsuru-gandalf"
   description = "Security group for Gandalf instance that allows SSH access from internet"
   network = "${google_compute_network.network1.name}"
 
@@ -44,7 +44,7 @@ resource "google_compute_firewall" "gandalf" {
 
 /* Security group for the web */
 resource "google_compute_firewall" "web" {
-  name = "web-tsuru"
+  name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"
   network = "${google_compute_network.network1.name}"
 

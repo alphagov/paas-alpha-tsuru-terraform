@@ -1,6 +1,6 @@
 /* Jumpbox Server Instance */
 resource "google_compute_instance" "nat" {
-  name = "tsuru-nat"
+  name = "${var.env}-tsuru-nat"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -39,6 +39,6 @@ resource "google_compute_instance" "nat" {
   tags = [ "public", "nat" ]
 
   provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} nat.${var.dns_zone_name} 60 A ${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}"
+    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-nat.${var.dns_zone_name} 60 A ${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}"
   }
 }
