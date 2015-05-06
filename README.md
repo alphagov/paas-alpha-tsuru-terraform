@@ -10,9 +10,11 @@ You need the cloud provider credentials. These will be entered on the command li
 
 ### Extra requirements for GCE provisioning
 
-The terraform provider for GCE requires access to an 'account.json' file - this is available from GCE's web interface in the 'credentials' section.
+1. The terraform provider for GCE requires access to an 'account.json' file - this is available from GCE's web interface in the 'credentials' section.
 
-The GCE provider for Terraform does not currently have support for managing DNS records, and as such we have created a wrapper around Google's 'gcloud' command which allows us to create DNS records as part of a local-provisioner step. It is necessary to manually install the 'gcloud' command line utility and authenticate it before running Terraform for the first time.
+Please note, for our team this is currently shared as it's not clear that we can create multiple accounts. If you are on the team please obtain the credentials from someone else. There is a [story in our backlog](https://www.pivotaltracker.com/n/projects/1275640/stories/93990946) to address this.
+
+2. The GCE provider for Terraform does not currently have support for managing DNS records, and as such we have created a wrapper around Google's 'gcloud' command which allows us to create DNS records as part of a local-provisioner step. It is necessary to manually install the 'gcloud' command line utility and authenticate it before running Terraform for the first time.
 
 `$ curl https://sdk.cloud.google.com | bash`
 
@@ -28,6 +30,7 @@ Once the above steps are complete, performing a  `gcloud compute instances list`
 ## Notes
 
 Change into one of the provider sub-directories before executing `terraform` commands.
+
 
 For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/commands/index.html).
 
