@@ -6,7 +6,7 @@ resource "aws_instance" "docker-registry" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-docker-registry"
+    Name = "${var.env}-tsuru-registry"
   }
   root_block_device {
     volume_type = "gp2"

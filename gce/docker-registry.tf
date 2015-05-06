@@ -1,6 +1,6 @@
 /* Docker Registry */
 resource "google_compute_instance" "docker-registry" {
-  name = "${var.env}-docker-registry"
+  name = "${var.env}-tsuru-registry"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
