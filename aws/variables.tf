@@ -31,24 +31,24 @@ variable "vpc_cidr" {
 variable "public_cidrs" {
   description = "CIDR for public subnet indexed by AZ"
   default     = {
-    zone0 = "10.128.0.0/24"
-    zone1 = "10.128.2.0/24"
+    zone0 = "10.128.10.0/24"
+    zone1 = "10.128.12.0/24"
   }
 }
 
 variable "private_cidrs" {
   description = "CIDR for private subnet indexed by AZ"
   default     = {
-    zone0 = "10.128.1.0/24"
-    zone1 = "10.128.3.0/24"
+    zone0 = "10.128.11.0/24"
+    zone1 = "10.128.13.0/24"
   }
 }
 
 variable "sslproxy_cidrs" {
   description = "CIDR for sslproxy subnet indexed by AZ"
   default     = {
-    zone0 = "10.128.5.0/24"
-    zone1 = "10.128.7.0/24"
+    zone0 = "10.128.15.0/24"
+    zone1 = "10.128.17.0/24"
   }
 }
 
