@@ -31,8 +31,9 @@ Once the above steps are complete, performing a  `gcloud compute instances list`
 
 Change into one of the provider sub-directories before executing `terraform` commands.
 
-
 For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/commands/index.html).
+
+To create your own environment, you need to pass a variable of the name you want to give it, e.g. `terraform apply -var env=my-new-environment`.
 
 We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console.
 
