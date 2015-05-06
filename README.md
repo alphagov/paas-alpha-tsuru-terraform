@@ -22,7 +22,7 @@ Please note, for our team this is currently shared as it's not clear that we can
 
 `$ gcloud auth activate-service-account --key-file ~/path/to/account.json`
 
-`$gcloud config set project <your_project_name>`
+`$gcloud config set project <name_of_project_in_GCE>`
 
 Once the above steps are complete, performing a  `gcloud compute instances list` will confirm that authentication is working as expected.
 
