@@ -21,7 +21,8 @@ resource "aws_route_table" "sslproxy" {
 }
 
 /* Associate the routing table to private subnets */
-resource "aws_route_table_association" "sslproxy1" {
+resource "aws_route_table_association" "sslproxy" {
+  count =2 
   subnet_id = "${element(aws_subnet.sslproxy.*.id, count.index)}"
   route_table_id = "${aws_route_table.sslproxy.id}"
 }
