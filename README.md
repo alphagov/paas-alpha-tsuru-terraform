@@ -31,5 +31,5 @@ Change into one of the provider sub-directories before executing `terraform` com
 
 For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/commands/index.html).
 
-We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console.
+We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console. You might also need to manually clean the `<YOUR_ENVIRONMENT>-mcp.registry.storage` S3 bucket, as terraform won't remove it unless it's empty.  
 
