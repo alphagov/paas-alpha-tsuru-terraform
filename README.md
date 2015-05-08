@@ -23,7 +23,7 @@ You need the cloud provider credentials. These will be entered on the command li
 
   $ gcloud auth activate-service-account --key-file ~/path/to/account.json
 
-  $gcloud config set project <name_of_project_in_GCE>
+  $ gcloud config set project <name_of_project_in_GCE>
 ````
 
   Once the above steps are complete, performing a  `gcloud compute instances list` will confirm that authentication is working as expected.
@@ -37,5 +37,4 @@ For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/comman
 
 To create your own environment, you need to pass a variable of the name you want to give it, e.g. `terraform apply -var env=my-new-environment`.
 
-We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console.
-
+We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console. You might also need to manually clean the `<my-new-environment>-mcp.registry.storage` S3 bucket, as terraform won't remove it unless it's empty.  
