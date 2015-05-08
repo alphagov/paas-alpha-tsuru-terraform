@@ -24,7 +24,7 @@ variable "env" {
 
 variable "ssh_key_path" {
   description = "Path to the ssh key to use"
-  default = "../ssh/insecure-deployer.pub"
+  default = "ssh/insecure-deployer.pub"
 }
 
 variable "user" {
