@@ -72,13 +72,8 @@ variable "api_ssl_certificate_id" {
   default = "arn:aws:iam::988997429095:server-certificate/wildcard_tsuru_paas_alphagov" 
 }
 
-variable "dns_zone_id_internal" {
-  description = "Amazon Route53 DNS zone identifier (internal)"
-  default = "Z3OIOPK20MYIOI"
-}
-
-variable "dns_zone_id_external" {
-  description = "Amazon Route53 DNS zone identifier (external)"
+variable "dns_zone_id" {
+  description = "Amazon Route53 DNS zone identifier"
   default = "ZAO40KKT7J2PB"
 }
 
