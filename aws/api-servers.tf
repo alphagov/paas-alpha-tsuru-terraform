@@ -19,6 +19,13 @@ resource "aws_elb" "api-ext" {
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
   instances = ["${aws_instance.api.*.id}"]
 
+  health_check {
+    target = "HTTP:8080/info"
+    interval = "${var.health_check_interval}"
+    timeout = "${var.health_check_timeout}"
+    healthy_threshold = "${var.health_check_healthy}"
+    unhealthy_threshold = "${var.health_check_unhealthy}"
+  }
   listener {
     instance_port = 8080
     instance_protocol = "http"
@@ -42,6 +49,13 @@ resource "aws_elb" "api-int" {
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
   instances = ["${aws_instance.api.*.id}"]
 
+  health_check {
+    target = "HTTP:8080/info"
+    interval = "${var.health_check_interval}"
+    timeout = "${var.health_check_timeout}"
+    healthy_threshold = "${var.health_check_healthy}"
+    unhealthy_threshold = "${var.health_check_unhealthy}"
+  }
   listener {
     instance_port = 8080
     instance_protocol = "http"

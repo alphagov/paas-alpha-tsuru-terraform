@@ -2,3 +2,23 @@ variable "office_cidrs" {
   description = "CSV of CIDR addresses for our office which will be trusted"
   default     = "80.194.77.90/32,80.194.77.100/32"
 }
+
+variable "health_check_interval" {
+  description = "Interval between requests for load balancer health checks"
+  default     = 5
+}
+
+variable "health_check_timeout" {
+  description = "Timeout of requests for load balancer health checks"
+  default     = 2
+}
+
+variable "health_check_healthy" {
+  description = "Threshold to consider load balancer healthy"
+  default     = 2
+}
+
+variable "health_check_unhealthy" {
+  description = "Threshold to consider load balancer unhealthy"
+  default     = 2
+}
