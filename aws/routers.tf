@@ -8,7 +8,7 @@ resource "aws_instance" "router" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-tsuru-app-router"
+    Name = "${var.env}-tsuru-router"
   }
 }
 
