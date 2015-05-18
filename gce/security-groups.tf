@@ -18,7 +18,7 @@ resource "google_compute_firewall" "nat" {
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
   network = "${google_compute_network.network1.name}"
 
-  source_ranges = ["${split(",", var.office_cidrs)}"]
+  source_ranges = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   target_tags = [ "nat" ]
 
   allow {
