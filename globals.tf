@@ -3,6 +3,11 @@ variable "office_cidrs" {
   default     = "80.194.77.90/32,80.194.77.100/32"
 }
 
+variable "jenkins_elastic" {
+  description = "Elastic IP for Jenkins server which will be trusted"
+  default     = "52.17.162.85/32"
+}
+
 variable "health_check_interval" {
   description = "Interval between requests for load balancer health checks"
   default     = 5

@@ -3,15 +3,15 @@ resource "aws_security_group" "default" {
   name = "${var.env}-default-tsuru"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port   = "0"
     to_port     = "0"
     protocol    = "-1"
     self        = true
   }
-  
-  tags { 
+
+  tags {
     Name = "${var.env}-tsuru-default"
   }
 }
@@ -21,15 +21,15 @@ resource "aws_security_group" "nat" {
   name = "${var.env}-nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   }
- 
-  tags { 
+
+  tags {
     Name = "${var.env}-tsuru-nat"
   }
 }
@@ -57,7 +57,7 @@ resource "aws_security_group" "web" {
   name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port = 80
     to_port   = 80
@@ -78,8 +78,8 @@ resource "aws_security_group" "web" {
     protocol  = "tcp"
     cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
- 
-  tags { 
+
+  tags {
     Name = "${var.env}-tsuru-web"
   }
 }
@@ -95,7 +95,7 @@ resource "aws_security_group" "web-int" {
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["${aws_subnet.sslproxy.*.cidr_block}"]
-  } 
+  }
 
  /* bug of terraform 0.4.2 does not work with  security groups this way. Workarounds above.
     ingress {
@@ -105,7 +105,7 @@ resource "aws_security_group" "web-int" {
     security_groups = ["${aws_security_group.sslproxy.id}"]
   } */
 
-  tags { 
+  tags {
     Name = "${var.env}-tsuru-web-int"
   }
 }
@@ -115,7 +115,7 @@ resource "aws_security_group" "sslproxy" {
   name = "${var.env}-tsuru-sslproxy"
   description = "Security group for sslproxy/offloader feedind the tsuru router elb"
   vpc_id = "${aws_vpc.default.id}"
-  
+
   ingress {
     from_port = 80
     to_port   = 80
@@ -129,8 +129,8 @@ resource "aws_security_group" "sslproxy" {
     protocol  = "tcp"
     cidr_blocks = ["${split(",", var.office_cidrs)}"]
   }
-  
-  tags { 
+
+  tags {
     Name = "${var.env}-tsuru-sslproxy"
   }
 }
