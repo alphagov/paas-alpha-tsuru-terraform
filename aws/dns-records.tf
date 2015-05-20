@@ -48,7 +48,7 @@ resource "aws_route53_record" "api-external" {
 /* API internal CNAME record */
 resource "aws_route53_record" "api-internal" {
   zone_id = "${var.dns_zone_id}"
-  name = "${var.env}-internal.api.${var.dns_zone_name}"
+  name = "${var.env}-api-int.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
   records = ["${aws_elb.api-int.dns_name}"]
