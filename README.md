@@ -2,7 +2,7 @@
 
 ## Requirements
 
-You need the terraform binary, e.g. `brew install terraform`.
+You need Terraform >= 0.5.0, e.g. `brew install terraform`.
 
 You need an SSH key. The private key needs to be chmod to 600.
 
