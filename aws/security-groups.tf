@@ -1,4 +1,3 @@
-/* Default security group */
 resource "aws_security_group" "default" {
   name = "${var.env}-default-tsuru"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
@@ -16,7 +15,6 @@ resource "aws_security_group" "default" {
   }
 }
 
-/* Security group for the nat server */
 resource "aws_security_group" "nat" {
   name = "${var.env}-nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
@@ -34,7 +32,6 @@ resource "aws_security_group" "nat" {
   }
 }
 
-/* Security group for the Gandalf server */
 resource "aws_security_group" "gandalf" {
   name = "${var.env}-tsuru-gandalf"
   description = "Security group for Gandalf instance that allows SSH access from internet"
@@ -52,7 +49,6 @@ resource "aws_security_group" "gandalf" {
   }
 }
 
-/* Security group for the web */
 resource "aws_security_group" "web" {
   name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"
@@ -84,7 +80,6 @@ resource "aws_security_group" "web" {
   }
 }
 
-/* Security group for the web */
 resource "aws_security_group" "web-int" {
   name = "${var.env}-web-int-tsuru"
   description = "Security group for web that allows web traffic from internet"
@@ -110,7 +105,6 @@ resource "aws_security_group" "web-int" {
   }
 }
 
-/* Security group for the sslproxy */
 resource "aws_security_group" "sslproxy" {
   name = "${var.env}-tsuru-sslproxy"
   description = "Security group for sslproxy/offloader feedind the tsuru router elb"

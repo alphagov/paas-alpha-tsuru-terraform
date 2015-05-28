@@ -1,4 +1,3 @@
-/* Gandalf server */
 resource "aws_instance" "gandalf" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"

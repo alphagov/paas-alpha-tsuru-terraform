@@ -1,4 +1,3 @@
-/* Docker Registry */
 resource "google_compute_instance" "docker-registry" {
   name = "${var.env}-tsuru-registry"
   machine_type = "n1-standard-1"

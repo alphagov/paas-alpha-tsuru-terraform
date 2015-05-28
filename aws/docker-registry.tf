@@ -1,4 +1,3 @@
-/* Docker Registry */
 resource "aws_instance" "docker-registry" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"

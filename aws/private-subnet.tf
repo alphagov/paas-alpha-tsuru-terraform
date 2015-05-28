@@ -1,4 +1,3 @@
-/* Private subnets */
 resource "aws_subnet" "private" {
   count             = 2
   vpc_id            = "${aws_vpc.default.id}"
@@ -11,7 +10,6 @@ resource "aws_subnet" "private" {
   }
 }
 
-/* Routing table for private subnets */
 resource "aws_route_table" "private" {
   vpc_id = "${aws_vpc.default.id}"
   route {
@@ -20,7 +18,6 @@ resource "aws_route_table" "private" {
   }
 }
 
-/* Associate the routing table to private subnets */
 resource "aws_route_table_association" "private" {
   count = 2
   subnet_id = "${element(aws_subnet.private.*.id, count.index)}"

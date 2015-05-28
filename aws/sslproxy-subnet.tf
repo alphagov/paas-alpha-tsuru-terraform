@@ -1,4 +1,3 @@
-/* Private subnets */
 resource "aws_subnet" "sslproxy" {
   count             = 2
   vpc_id            = "${aws_vpc.default.id}"
@@ -11,7 +10,6 @@ resource "aws_subnet" "sslproxy" {
   }
 }
 
-/* Routing table for private subnets */
 resource "aws_route_table" "sslproxy" {
   vpc_id = "${aws_vpc.default.id}"
   route {
@@ -20,7 +18,6 @@ resource "aws_route_table" "sslproxy" {
   }
 }
 
-/* Associate the routing table to private subnets */
 resource "aws_route_table_association" "sslproxy" {
   count =2 
   subnet_id = "${element(aws_subnet.sslproxy.*.id, count.index)}"

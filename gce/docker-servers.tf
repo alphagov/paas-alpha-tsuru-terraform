@@ -1,4 +1,3 @@
-/* Docker server */
 resource "google_compute_instance" "docker" {
   name = "${var.env}-tsuru-docker"
   machine_type = "n1-standard-1"

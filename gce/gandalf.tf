@@ -1,4 +1,3 @@
-/* Gandalf server */
 resource "google_compute_instance" "gandalf" {
   name = "${var.env}-tsuru-gandalf"
   machine_type = "n1-standard-1"

@@ -1,4 +1,3 @@
-/* Single instance postgres server */
 resource "aws_instance" "postgres" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"

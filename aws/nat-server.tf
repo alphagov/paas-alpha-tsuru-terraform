@@ -1,4 +1,3 @@
-/* NAT/VPN server */
 resource "aws_instance" "nat" {
   ami = "${lookup(var.nat_ami, var.region)}"
   instance_type = "t2.micro"

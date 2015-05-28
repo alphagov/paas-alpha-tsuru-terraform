@@ -1,4 +1,3 @@
-/* MongoDB and Redis DB server */
 resource "aws_instance" "tsuru-db" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"

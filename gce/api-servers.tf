@@ -1,4 +1,3 @@
-/* API server */
 resource "google_compute_instance" "api" {
   count = 2
   name = "${var.env}-tsuru-api-${count.index}"
@@ -19,7 +18,6 @@ resource "google_compute_instance" "api" {
   tags = [ "private", "web" ]
 }
 
-/* API load balancer */
 resource "google_compute_http_health_check" "api" {
   name = "${var.env}-tsuru-api"
   port = 8080
