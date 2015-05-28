@@ -26,8 +26,4 @@ resource "google_compute_forwarding_rule" "router" {
   name = "${var.env}-tsuru-router-lb"
   target = "${google_compute_target_pool.router.self_link}"
   port_range = 80
-
-  provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-hipache.${var.dns_zone_name} 60 A ${google_compute_forwarding_rule.router.ip_address}"
-  }
 }

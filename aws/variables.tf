@@ -80,7 +80,7 @@ variable "dns_zone_id" {
 
 variable "dns_zone_name" {
   description = "Amazon Route53 DNS zone name"
-  default     = "tsuru.paas.alphagov.co.uk"
+  default     = "tsuru.paas.alphagov.co.uk."
 }
 
 variable "registry_s3_bucketname" {
