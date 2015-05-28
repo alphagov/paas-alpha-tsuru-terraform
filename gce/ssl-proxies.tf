@@ -27,14 +27,8 @@ resource "google_compute_target_pool" "tsuru-sslproxy" {
 }
 resource "google_compute_address" "tsuru-sslproxy" {
   name = "${var.env}-tsuru-sslproxy"
-
-  provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-proxy.${var.dns_zone_name} 60 A ${google_compute_address.tsuru-sslproxy.address}"
-  }
-  provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} *.${var.env}-hipache.${var.dns_zone_name} 60 CNAME ${var.env}-proxy.${var.dns_zone_name}."
-  }
-}resource "google_compute_forwarding_rule" "tsuru-sslproxy-443" {
+}
+resource "google_compute_forwarding_rule" "tsuru-sslproxy-443" {
   name = "${var.env}-tsuru-sslproxy-lb443"
   target = "${google_compute_target_pool.tsuru-sslproxy.self_link}"
   port_range = 443

@@ -17,8 +17,4 @@ resource "google_compute_instance" "docker-registry" {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
   tags = [ "private" ]
-
-  provisioner "local-exec" {
-    command = "./ensure_gce_dns.sh ${var.dns_zone_id} ${var.env}-docker-registry.${var.dns_zone_name} 60 A ${google_compute_instance.docker-registry.network_interface.0.address}"
-  }
 }
