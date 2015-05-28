@@ -1,4 +1,3 @@
-/* SSL proxy Launch configuration */
 resource "aws_instance" "tsuru-sslproxy" {
   count = 2
   ami = "${lookup(var.amis, var.region)}"
@@ -12,7 +11,6 @@ resource "aws_instance" "tsuru-sslproxy" {
   }
 }
 
-/* SSL proxy Load balancer */
 resource "aws_elb" "tsuru-sslproxy-elb" {
   name = "${var.env}-tsuru-sslproxy-elb"
   subnets = ["${aws_subnet.public.*.id}"]

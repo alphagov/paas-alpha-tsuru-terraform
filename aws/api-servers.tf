@@ -1,4 +1,3 @@
-/* API servers Launch configuration */
 resource "aws_instance" "api" {
   count = 2
   ami = "${lookup(var.amis, var.region)}"
@@ -12,7 +11,6 @@ resource "aws_instance" "api" {
   }
 }
 
-/* API external Load balancer */
 resource "aws_elb" "api-ext" {
   name = "${var.env}-tsuru-api-elb-ext"
   subnets = ["${aws_subnet.public.*.id}"]
@@ -41,7 +39,6 @@ resource "aws_elb" "api-ext" {
   }
 }
 
-/* API internal Load balancer */
 resource "aws_elb" "api-int" {
   name = "${var.env}-tsuru-api-elb-int"
   subnets = ["${aws_subnet.private.*.id}"]

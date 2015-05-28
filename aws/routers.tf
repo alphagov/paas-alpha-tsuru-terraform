@@ -1,4 +1,3 @@
-/* Router Launch configuration */
 resource "aws_instance" "router" {
   count = 2
   ami = "${lookup(var.amis, var.region)}"
@@ -12,7 +11,6 @@ resource "aws_instance" "router" {
   }
 }
 
-/* Router External Load balancer */
 resource "aws_elb" "router" {
   name = "${var.env}-tsuru-router-elb"
   subnets = ["${aws_subnet.public.*.id}"]
@@ -34,7 +32,6 @@ resource "aws_elb" "router" {
   }
 }
 
-/* Router Internal Load balancer */
 resource "aws_elb" "router-int" {
   name = "${var.env}-tsuru-router-elb-int"
   subnets = ["${aws_subnet.private.*.id}"]

@@ -1,4 +1,3 @@
-/* Routers */
 resource "google_compute_instance" "router" {
   count = 2
   name = "${var.env}-tsuru-router-${count.index}"
@@ -19,7 +18,6 @@ resource "google_compute_instance" "router" {
   tags = [ "private", "web" ]
 }
 
-/* Router load balancer */
 resource "google_compute_target_pool" "router" {
   name = "${var.env}-tsuru-router-lb"
   instances = [ "${google_compute_instance.router.*.self_link}" ]

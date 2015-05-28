@@ -52,7 +52,6 @@ variable "sslproxy_cidrs" {
   }
 }
 
-/* Ubuntu 14.04 amis by region */
 variable "amis" {
   description = "Base AMI to launch the instances with"
   default = {

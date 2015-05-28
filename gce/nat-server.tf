@@ -1,4 +1,3 @@
-/* Jumpbox Server Instance */
 resource "google_compute_instance" "nat" {
   name = "${var.env}-tsuru-nat"
   machine_type = "n1-standard-1"

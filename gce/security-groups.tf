@@ -1,4 +1,3 @@
-/* Internal security group */
 resource "google_compute_firewall" "internal" {
   name = "${var.env}-tsuru-internal"
   description = "Security group for internally routed traffic"
@@ -12,7 +11,6 @@ resource "google_compute_firewall" "internal" {
   allow { protocol = "icmp" }
 }
 
-/* Security group for the nat server */
 resource "google_compute_firewall" "nat" {
   name = "${var.env}-nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
@@ -27,7 +25,6 @@ resource "google_compute_firewall" "nat" {
   }
 }
 
-/* Security group for the Gandalf server */
 resource "google_compute_firewall" "gandalf" {
   name = "${var.env}-tsuru-gandalf"
   description = "Security group for Gandalf instance that allows SSH access from internet"
@@ -42,7 +39,6 @@ resource "google_compute_firewall" "gandalf" {
   }
 }
 
-/* Security group for the web */
 resource "google_compute_firewall" "web" {
   name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"

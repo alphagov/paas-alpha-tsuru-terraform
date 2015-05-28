@@ -1,4 +1,3 @@
-/* MongoDB and Redis DB server */
 resource "google_compute_instance" "db" {
   name = "${var.env}-tsuru-db"
   machine_type = "n1-standard-1"

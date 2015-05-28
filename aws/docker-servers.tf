@@ -1,4 +1,3 @@
-/* Docker server */
 resource "aws_instance" "tsuru-docker" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"

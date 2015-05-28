@@ -1,4 +1,3 @@
-/* SSL proxy */
 resource "google_compute_instance" "sslproxy" {
   count = 2
   name = "${var.env}-tsuru-sslproxy-${count.index}"
@@ -19,7 +18,6 @@ resource "google_compute_instance" "sslproxy" {
   tags = [ "private", "web" ]
 }
 
-/* SSL proxy load balancer */
 resource "google_compute_target_pool" "tsuru-sslproxy" {
   name = "${var.env}-tsuru-sslproxy-lb"
   instances = [ "${google_compute_instance.sslproxy.*.self_link}" ]
