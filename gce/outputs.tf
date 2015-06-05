@@ -30,14 +30,10 @@ output "postgres.private_ip" {
   value = "${google_compute_instance.postgres.network_interface.0.address}"
 }
 
-output "sslproxy.*.private_ip" {
-  value = "${join(",", google_compute_instance.sslproxy.*.network_interface.0.address)}"
-}
-
 output "router.*.private_ip" {
   value = "${join(",", google_compute_instance.router.*.network_interface.0.address)}"
 }
 
 output "elb.hostname" {
-  value = "${google_compute_forwarding_rule.router.ip_address}"
+  value = "${google_compute_forwarding_rule.router_https.ip_address}"
 }
