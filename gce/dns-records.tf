@@ -3,15 +3,7 @@ resource "google_dns_record_set" "router" {
   name = "${var.env}-hipache.${var.dns_zone_name}"
   type = "A"
   ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.router.ip_address}"]
-}
-
-resource "google_dns_record_set" "sslproxy" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-proxy.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_address.tsuru-sslproxy.address}"]
+  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
 }
 
 resource "google_dns_record_set" "wildcard" {
@@ -19,10 +11,7 @@ resource "google_dns_record_set" "wildcard" {
   name = "*.${var.env}-hipache.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
-  /* enable this to talk to the hipache router directly (HTTP only)
-  rrdatas = ["${google_dns_record_set.router.name}"] */
-  /* enable this to talk to the SSL offload proxy (ngnix, HTTP+HTTPS) */
-  rrdatas = ["${google_dns_record_set.sslproxy.name}"]
+  rrdatas = ["${google_dns_record_set.router.name}"]
 }
 
 resource "google_dns_record_set" "api" {

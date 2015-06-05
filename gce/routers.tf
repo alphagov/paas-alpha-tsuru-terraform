@@ -22,8 +22,18 @@ resource "google_compute_target_pool" "router" {
   name = "${var.env}-tsuru-router-lb"
   instances = [ "${google_compute_instance.router.*.self_link}" ]
 }
-resource "google_compute_forwarding_rule" "router" {
+resource "google_compute_address" "router" {
   name = "${var.env}-tsuru-router-lb"
+}
+resource "google_compute_forwarding_rule" "router_http" {
+  name = "${var.env}-tsuru-router-lb-http"
+  ip_address = "${google_compute_address.router.address}"
   target = "${google_compute_target_pool.router.self_link}"
   port_range = 80
+}
+resource "google_compute_forwarding_rule" "router_https" {
+  name = "${var.env}-tsuru-router-lb-https"
+  ip_address = "${google_compute_address.router.address}"
+  target = "${google_compute_target_pool.router.self_link}"
+  port_range = 443
 }
