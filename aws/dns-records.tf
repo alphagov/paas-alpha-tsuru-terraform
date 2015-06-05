@@ -6,14 +6,6 @@ resource "aws_route53_record" "router" {
   records = ["${aws_elb.router.dns_name}"]
 }
 
-resource "aws_route53_record" "sslproxy" {
-  zone_id = "${var.dns_zone_id}"
-  name = "${var.env}-proxy.${var.dns_zone_name}"
-  type = "CNAME"
-  ttl = "60"
-  records = ["${aws_elb.tsuru-sslproxy-elb.dns_name}"]
-}
-
 resource "aws_route53_record" "router-int" {
   zone_id = "${var.dns_zone_id}"
   name = "${var.env}-hipache-int.${var.dns_zone_name}"
@@ -27,10 +19,7 @@ resource "aws_route53_record" "wildcard" {
   name = "*.${var.env}-hipache.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
-  /* enable this to talk to the hipache router directly (HTTP only)
-  records = ["${aws_route53_record.router.name}"] */
-  /* enable this to talk to the SSL offload proxy (ngnix, HTTP+HTTPS) */
-  records = ["${aws_route53_record.sslproxy.name}"]
+  records = ["${aws_route53_record.router.name}"]
 }
 
 resource "aws_route53_record" "api-external" {

@@ -44,14 +44,6 @@ variable "private_cidrs" {
   }
 }
 
-variable "sslproxy_cidrs" {
-  description = "CIDR for sslproxy subnet indexed by AZ"
-  default     = {
-    zone0 = "10.128.15.0/24"
-    zone1 = "10.128.17.0/24"
-  }
-}
-
 variable "amis" {
   description = "Base AMI to launch the instances with"
   default = {

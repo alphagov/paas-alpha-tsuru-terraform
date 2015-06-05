@@ -108,65 +108,16 @@ resource "aws_security_group" "web" {
   }
 }
 
+/* FIXME: Unused, remove when deployed to CI */
 resource "aws_security_group" "web-int" {
   name = "${var.env}-web-int-tsuru"
   description = "Security group for web that allows web traffic from internet"
   vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["${aws_subnet.sslproxy.*.cidr_block}"]
-  }
-
- /* bug of terraform 0.4.2 does not work with  security groups this way. Workarounds above.
-    ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    security_groups = ["${aws_security_group.sslproxy.id}"]
-  } */
-
-  tags {
-    Name = "${var.env}-tsuru-web-int"
-  }
 }
 
+/* FIXME: Unused, remove when deployed to CI */
 resource "aws_security_group" "sslproxy" {
   name = "${var.env}-tsuru-sslproxy"
   description = "Security group for sslproxy/offloader feedind the tsuru router elb"
   vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
-  }
-
-  ingress {
-    from_port = 443
-    to_port   = 443
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
-  }
-
-  tags {
-    Name = "${var.env}-tsuru-sslproxy"
-  }
 }

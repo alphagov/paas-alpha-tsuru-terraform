@@ -34,10 +34,6 @@ output "router.*.ip" {
   value = "${join(",", aws_instance.router.*.private_ip)}"
 }
 
-output "sslproxy.*.ip" {
-  value = "${join(",", aws_instance.tsuru-sslproxy.*.private_ip)}"
-}
-
 output "elb.hostname" {
   value = "${aws_elb.router.dns_name}"
 }

@@ -18,7 +18,7 @@ resource "aws_elb" "router" {
   instances = ["${aws_instance.router.*.id}"]
 
   health_check {
-    target = "TCP:80"
+    target = "TCP:443"
     interval = "${var.health_check_interval}"
     timeout = "${var.health_check_timeout}"
     healthy_threshold = "${var.health_check_healthy}"
@@ -29,6 +29,12 @@ resource "aws_elb" "router" {
     instance_protocol = "http"
     lb_port = 80
     lb_protocol = "http"
+  }
+  listener {
+    instance_port = 443
+    instance_protocol = "tcp"
+    lb_port = 443
+    lb_protocol = "tcp"
   }
 }
 
@@ -36,11 +42,11 @@ resource "aws_elb" "router-int" {
   name = "${var.env}-tsuru-router-elb-int"
   subnets = ["${aws_subnet.private.*.id}"]
   internal = true
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web-int.id}"]
+  security_groups = ["${aws_security_group.default.id}"]
   instances = ["${aws_instance.router.*.id}"]
 
   health_check {
-    target = "TCP:80"
+    target = "TCP:443"
     interval = "${var.health_check_interval}"
     timeout = "${var.health_check_timeout}"
     healthy_threshold = "${var.health_check_healthy}"
@@ -51,5 +57,11 @@ resource "aws_elb" "router-int" {
     instance_protocol = "http"
     lb_port = 80
     lb_protocol = "http"
+  }
+  listener {
+    instance_port = 443
+    instance_protocol = "tcp"
+    lb_port = 443
+    lb_protocol = "tcp"
   }
 }
