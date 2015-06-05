@@ -51,3 +51,13 @@ variable "dns_zone_name" {
   description = "Google DNS zone name"
   default     = "tsuru2.paas.alphagov.co.uk."
 }
+
+variable "registry_gcs_bucketname" {
+  description = "GCS Object Storage name for the registry"
+  default = "mcp-registry-storage"
+}
+
+variable "registry_gcs_bucketname_acl" {
+  description = "GCS Bucket canned Access Control List"
+  default = "projectPrivate"
+}
