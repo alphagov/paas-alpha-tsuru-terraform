@@ -13,6 +13,11 @@ variable "gce_region" {
   default = "europe-west1"
 }
 
+variable "gcs_region" {
+  description = "GCS Region to use"
+  default = "EU"
+}
+
 variable "gce_zones" {
   description = "GCE Zones to choose from"
   default = "europe-west1-b,europe-west1-c,europe-west1-d"
@@ -50,4 +55,14 @@ variable "dns_zone_id" {
 variable "dns_zone_name" {
   description = "Google DNS zone name"
   default     = "tsuru2.paas.alphagov.co.uk."
+}
+
+variable "registry_gcs_bucketname" {
+  description = "GCS Object Storage name for the registry"
+  default = "mcp-registry-storage"
+}
+
+variable "registry_gcs_bucketname_acl" {
+  description = "GCS Bucket canned Access Control List"
+  default = "projectPrivate"
 }
