@@ -13,7 +13,7 @@ resource "google_compute_instance" "docker-registry" {
     sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
   }
   service_account {
-    scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
+    scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
   }
   tags = [ "private" ]
 }
