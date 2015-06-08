@@ -30,7 +30,7 @@ resource "google_compute_firewall" "gandalf" {
   description = "Security group for Gandalf instance that allows SSH access from internet"
   network = "${google_compute_network.network1.name}"
 
-  source_ranges = ["${split(",", var.office_cidrs)}"]
+  source_ranges = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   target_tags = [ "gandalf" ]
 
   allow {
@@ -45,7 +45,7 @@ resource "google_compute_firewall" "web" {
   network = "${google_compute_network.network1.name}"
 
   source_ranges = [
-    "${split(",", var.office_cidrs)}",
+    "${split(",", var.office_cidrs)}","${var.jenkins_elastic}",
     "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}",
     "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}",
   ]

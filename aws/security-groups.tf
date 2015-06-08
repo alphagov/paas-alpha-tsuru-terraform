@@ -62,7 +62,7 @@ resource "aws_security_group" "gandalf" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   }
 
   tags {
@@ -86,21 +86,21 @@ resource "aws_security_group" "web" {
     from_port = 80
     to_port   = 80
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   }
 
   ingress {
     from_port = 8080
     to_port   = 8080
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   }
 
   ingress {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
   }
 
   tags {
