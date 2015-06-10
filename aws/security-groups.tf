@@ -62,7 +62,7 @@ resource "aws_security_group" "gandalf" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
   tags {
