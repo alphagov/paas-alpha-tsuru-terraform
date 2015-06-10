@@ -18,7 +18,7 @@ resource "aws_elb" "api-ext" {
   instances = ["${aws_instance.api.*.id}"]
 
   health_check {
-    target = "HTTP:8080/info"
+    target = "HTTPS:443/info"
     interval = "${var.health_check_interval}"
     timeout = "${var.health_check_timeout}"
     healthy_threshold = "${var.health_check_healthy}"
@@ -31,11 +31,10 @@ resource "aws_elb" "api-ext" {
     lb_protocol = "http"
   }
   listener {
-    instance_port = 8080
-    instance_protocol = "http"
+    instance_port = 443
+    instance_protocol = "tcp"
     lb_port = 443
-    lb_protocol = "https"
-    ssl_certificate_id = "${var.api_ssl_certificate_id}"
+    lb_protocol = "tcp"
   }
 }
 
