@@ -1,17 +1,9 @@
-resource "aws_route53_record" "router" {
-  zone_id = "${var.dns_zone_id}"
-  name = "${var.env}-hipache.${var.dns_zone_name}"
-  type = "CNAME"
-  ttl = "60"
-  records = ["${aws_elb.router.dns_name}"]
-}
-
 resource "aws_route53_record" "wildcard" {
   zone_id = "${var.dns_zone_id}"
   name = "*.${var.env}-hipache.${var.dns_zone_name}"
   type = "CNAME"
   ttl = "60"
-  records = ["${aws_route53_record.router.name}"]
+  records = ["${aws_elb.router.dns_name}"]
 }
 
 resource "aws_route53_record" "api-external" {

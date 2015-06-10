@@ -1,17 +1,9 @@
-resource "google_dns_record_set" "router" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-hipache.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
-}
-
 resource "google_dns_record_set" "wildcard" {
   managed_zone = "${var.dns_zone_id}"
   name = "*.${var.env}-hipache.${var.dns_zone_name}"
-  type = "CNAME"
+  type = "A"
   ttl = "60"
-  rrdatas = ["${google_dns_record_set.router.name}"]
+  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
 }
 
 resource "google_dns_record_set" "api" {
