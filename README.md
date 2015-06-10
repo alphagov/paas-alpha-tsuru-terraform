@@ -14,6 +14,15 @@ The terraform provider for GCE requires access to an 'account.json' file - this 
 
 Please note, for our team this is currently shared as it's not clear that we can create multiple accounts. If you are on the team please obtain the credentials from someone else. There is a [story in our backlog](https://www.pivotaltracker.com/n/projects/1275640/stories/93990946) to address this.
 
+### Extra requirements for AWS provisioning
+
+The terraform provider for AWS will read the standard AWS credentials environment variables. You must have these variables exported:
+
+	AWS_ACCESS_KEY_ID
+	AWS_SECRET_ACCESS_KEY
+
+You can get the credentials from the AWS console.
+
 ## Notes
 
 Change into one of the provider sub-directories before executing `terraform` commands.
