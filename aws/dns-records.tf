@@ -45,3 +45,11 @@ resource "aws_route53_record" "docker-registry" {
   ttl = "60"
   records = ["${aws_instance.docker-registry.private_ip}"]
 }
+
+resource "aws_route53_record" "postgresapi" {
+  zone_id = "${var.dns_zone_id}"
+  name = "${var.env}-postgresapi.${var.dns_zone_name}"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.router.dns_name}"]
+}

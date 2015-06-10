@@ -37,3 +37,11 @@ resource "google_dns_record_set" "docker-registry" {
   ttl = "60"
   rrdatas = ["${google_compute_instance.docker-registry.network_interface.0.address}"]
 }
+
+resource "google_dns_record_set" "postgresapi" {
+  managed_zone = "${var.dns_zone_id}"
+  name = "${var.env}-postgresapi.${var.dns_zone_name}"
+  type = "A"
+  ttl = "60"
+  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
+}
