@@ -86,21 +86,21 @@ resource "aws_security_group" "web" {
     from_port = 80
     to_port   = 80
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
   ingress {
     from_port = 8080
     to_port   = 8080
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
   ingress {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
   tags {
