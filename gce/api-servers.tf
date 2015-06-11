@@ -27,24 +27,10 @@ resource "google_compute_http_health_check" "api" {
   healthy_threshold = "${var.health_check_healthy}"
   unhealthy_threshold = "${var.health_check_unhealthy}"
 }
-resource "google_compute_http_health_check" "api_https" {
-  name = "${var.env}-tsuru-api-https"
-  port = 443
-  request_path = "/info"
-  check_interval_sec = "${var.health_check_interval}"
-  timeout_sec = "${var.health_check_timeout}"
-  healthy_threshold = "${var.health_check_healthy}"
-  unhealthy_threshold = "${var.health_check_unhealthy}"
-}
 resource "google_compute_target_pool" "api" {
   name = "${var.env}-tsuru-api-lb"
   instances = [ "${google_compute_instance.api.*.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.api.name}" ]
-}
-resource "google_compute_target_pool" "api_https" {
-  name = "${var.env}-tsuru-api-lb-https"
-  instances = [ "${google_compute_instance.api.*.self_link}" ]
-  health_checks = [ "${google_compute_http_health_check.api_https.name}" ]
 }
 resource "google_compute_address" "api" {
   name = "${var.env}-tsuru-api-lb"
@@ -58,6 +44,6 @@ resource "google_compute_forwarding_rule" "api" {
 resource "google_compute_forwarding_rule" "api_https" {
   name = "${var.env}-tsuru-api-lb-https"
   ip_address = "${google_compute_address.api.address}"
-  target = "${google_compute_target_pool.api_https.self_link}"
+  target = "${google_compute_target_pool.api.self_link}"
   port_range = 443
 }
