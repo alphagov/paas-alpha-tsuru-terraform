@@ -32,8 +32,18 @@ resource "google_compute_target_pool" "api" {
   instances = [ "${google_compute_instance.api.*.self_link}" ]
   health_checks = [ "${google_compute_http_health_check.api.name}" ]
 }
+resource "google_compute_address" "api" {
+  name = "${var.env}-tsuru-api-lb"
+}
 resource "google_compute_forwarding_rule" "api" {
   name = "${var.env}-tsuru-api-lb"
+  ip_address = "${google_compute_address.api.address}"
   target = "${google_compute_target_pool.api.self_link}"
   port_range = 8080
+}
+resource "google_compute_forwarding_rule" "api_https" {
+  name = "${var.env}-tsuru-api-lb-https"
+  ip_address = "${google_compute_address.api.address}"
+  target = "${google_compute_target_pool.api.self_link}"
+  port_range = 443
 }

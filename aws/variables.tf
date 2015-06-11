@@ -52,11 +52,6 @@ variable "nat_ami" {
   }
 }
 
-variable "api_ssl_certificate_id" {
-  description = "SSL Certificate for Tsuru API"
-  default = "arn:aws:iam::988997429095:server-certificate/wildcard_tsuru_paas_alphagov" 
-}
-
 variable "dns_zone_id" {
   description = "Amazon Route53 DNS zone identifier"
   default = "ZAO40KKT7J2PB"
