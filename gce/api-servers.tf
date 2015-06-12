@@ -18,19 +18,9 @@ resource "google_compute_instance" "api" {
   tags = [ "private", "web" ]
 }
 
-resource "google_compute_http_health_check" "api" {
-  name = "${var.env}-tsuru-api"
-  port = 8080
-  request_path = "/info"
-  check_interval_sec = "${var.health_check_interval}"
-  timeout_sec = "${var.health_check_timeout}"
-  healthy_threshold = "${var.health_check_healthy}"
-  unhealthy_threshold = "${var.health_check_unhealthy}"
-}
 resource "google_compute_target_pool" "api" {
   name = "${var.env}-tsuru-api-lb"
   instances = [ "${google_compute_instance.api.*.self_link}" ]
-  health_checks = [ "${google_compute_http_health_check.api.name}" ]
 }
 resource "google_compute_address" "api" {
   name = "${var.env}-tsuru-api-lb"
