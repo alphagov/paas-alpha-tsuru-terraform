@@ -11,7 +11,7 @@ resource "google_dns_record_set" "api" {
   name = "${var.env}-api.${var.dns_zone_name}"
   type = "A"
   ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.api.ip_address}"]
+  rrdatas = ["${google_compute_address.api.address}"]
 }
 
 resource "google_dns_record_set" "gandalf" {
