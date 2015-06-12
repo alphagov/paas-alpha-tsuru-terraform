@@ -25,12 +25,6 @@ resource "aws_elb" "api-ext" {
     unhealthy_threshold = "${var.health_check_unhealthy}"
   }
   listener {
-    instance_port = 8080
-    instance_protocol = "http"
-    lb_port = 8080
-    lb_protocol = "http"
-  }
-  listener {
     instance_port = 443
     instance_protocol = "tcp"
     lb_port = 443
@@ -51,12 +45,6 @@ resource "aws_elb" "api-int" {
     timeout = "${var.health_check_timeout}"
     healthy_threshold = "${var.health_check_healthy}"
     unhealthy_threshold = "${var.health_check_unhealthy}"
-  }
-  listener {
-    instance_port = 8080
-    instance_protocol = "http"
-    lb_port = 8080
-    lb_protocol = "http"
   }
   listener {
     instance_port = 443
