@@ -30,6 +30,10 @@ output "postgres.private_ip" {
   value = "${aws_instance.postgres.private_ip}"
 }
 
+output "graphite.private_ip" {
+  value = "${aws_instance.graphite.private_ip}"
+}
+
 output "router.*.ip" {
   value = "${join(",", aws_instance.router.*.private_ip)}"
 }
