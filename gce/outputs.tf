@@ -30,10 +30,6 @@ output "postgres.private_ip" {
   value = "${google_compute_instance.postgres.network_interface.0.address}"
 }
 
-output "graphite.private_ip" {
-  value = "${google_compute_instance.graphite.network_interface.0.address}"
-}
-
 output "router.*.private_ip" {
   value = "${join(",", google_compute_instance.router.*.network_interface.0.address)}"
 }
