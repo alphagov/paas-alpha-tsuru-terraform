@@ -45,11 +45,3 @@ resource "google_dns_record_set" "postgresapi" {
   ttl = "60"
   rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
 }
-
-resource "google_dns_record_set" "graphite" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-metrics.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_instance.graphite.network_interface.0.address}"]
-}
