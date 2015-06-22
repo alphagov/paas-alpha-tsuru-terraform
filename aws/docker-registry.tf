@@ -1,9 +1,53 @@
+resource "aws_iam_role" "docker-registry" {
+  name = "${var.registry_s3_rolename}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": { "Service": "ec2.amazonaws.com" },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "docker-registry" {
+  name   = "${var.registry_s3_rolename}"
+  role   = "${aws_iam_role.docker-registry.id}"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Action": [ "s3:*" ],
+      "Resource": [
+        "arn:aws:s3:::*-${var.registry_s3_bucketname}",
+        "arn:aws:s3:::*-${var.registry_s3_bucketname}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "docker-registry" {
+  name  = "${var.registry_s3_rolename}"
+  roles = [ "${aws_iam_role.docker-registry.id}" ]
+}
+
 resource "aws_instance" "docker-registry" {
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private.0.id}"
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
+  iam_instance_profile = "${var.registry_s3_rolename}"
   tags = {
     Name = "${var.env}-tsuru-registry"
   }

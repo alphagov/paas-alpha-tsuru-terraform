@@ -62,6 +62,11 @@ variable "dns_zone_name" {
   default     = "tsuru.paas.alphagov.co.uk."
 }
 
+variable "registry_s3_rolename" {
+  description = "IAM role name for docker registry on S3"
+  default = "tsuru-docker-registry-s3"
+}
+
 variable "registry_s3_bucketname" {
   description = "S3 Object Storage name for the registry"
   default = "mcp.registry.storage"  
