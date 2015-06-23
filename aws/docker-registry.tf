@@ -65,5 +65,6 @@ resource "aws_instance" "docker-registry" {
 resource "aws_s3_bucket" "registry-s3" {
     bucket = "${var.env}-${var.registry_s3_bucketname}"
     acl = "private"
+    force_destroy = "${var.force_destroy}"
 }
 

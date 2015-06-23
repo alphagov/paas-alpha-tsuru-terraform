@@ -23,6 +23,15 @@ The terraform provider for AWS will read the standard AWS credentials environmen
 
 You can get the credentials from the AWS console.
 
+### Destroy
+
+When you destroy the infrastructure, you will get an error if you try to delete a non empty GCS or S3 bucket.
+To force the destruction of the bucket content:
+```bash
+$ terraform destroy -var env="my_env" -var force_destroy=true
+```
+You may have to reapply with this option before destroying.
+
 ## Notes
 
 Change into one of the provider sub-directories before executing `terraform` commands.
