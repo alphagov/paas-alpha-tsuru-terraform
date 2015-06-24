@@ -23,6 +23,37 @@ The terraform provider for AWS will read the standard AWS credentials environmen
 
 You can get the credentials from the AWS console.
 
+### Provision the environment
+
+In order to provision a test environment:
+
+ 1. Go to the desired platform directory:  `cd aws` or `cd gce`
+ 2. run `terraform apply -var env=<env-name-prefix> -var force_destroy=true`
+
+**IMPORTANT**: The option `-var force_destroy=true` will mark all the resources,
+including datastores, to be deleted when destroying the environment.
+This is OK in test environment, but dangerous in production ones.
+
+### Destroy
+
+When you destroy the infrastructure, you will get an error if you try to
+delete a non empty GCS or S3 bucket if the option `force_destroy=true` was
+not initially set.
+
+To force the destruction of the bucket content you need to reapply terraform
+to update the state (file `terraform.tfstate`). Limit the scope of apply to
+the bucket with `-target` to avoid recreating all the other resources:
+
+```bash
+# On AWS:
+terraform apply -var env=<env-name-prefix> -var force_destroy=true -target=aws_s3_bucket.registry-s3
+terraform destroy -var env=<env-name-prefix> -var force_destroy=true
+# On GCE:
+terraform apply -var env=<env-name-prefix> -var force_destroy=true -target=google_storage_bucket.registry-gcs
+terraform destroy -var env=<env-name-prefix> -var force_destroy=true
+
+```
+
 ## Notes
 
 Change into one of the provider sub-directories before executing `terraform` commands.

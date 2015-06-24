@@ -27,3 +27,8 @@ variable "health_check_unhealthy" {
   description = "Threshold to consider load balancer unhealthy"
   default     = 2
 }
+
+variable "force_destroy" {
+  description = "Delete GCS and S3 buckets content"
+  default     = false
+}

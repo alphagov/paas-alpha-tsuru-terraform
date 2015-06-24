@@ -22,4 +22,5 @@ resource "google_storage_bucket" "registry-gcs" {
     name = "${var.env}-${var.registry_gcs_bucketname}"
     predefined_acl = "${var.registry_gcs_bucketname_acl}"
     location = "${var.gcs_region}"
+    force_destroy = "${var.force_destroy}"
 }
