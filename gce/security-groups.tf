@@ -54,6 +54,6 @@ resource "google_compute_firewall" "web" {
 
   allow {
     protocol = "tcp"
-    ports = [ 80, 8080, 443 ]
+    ports = [ 80, 8080, 443, 3000, 8083 ]
   }
 }
