@@ -8,6 +8,7 @@ resource "google_compute_instance" "influx-grafana" {
   }
   network_interface {
     network = "${google_compute_network.network1.name}"
+    access_config {}
   }
   metadata {
     sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
@@ -15,6 +16,6 @@ resource "google_compute_instance" "influx-grafana" {
   service_account {
     scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "public", "web" ]
 }
 
