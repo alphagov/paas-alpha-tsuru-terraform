@@ -22,6 +22,14 @@ output "gandalf.public.ip" {
   value = "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"
 }
 
+output "influx.private_ip" {
+  value = "${google_compute_instance.influx-grafana.network_interface.0.address}"
+}
+
+output "influx.public.ip" {
+  value = "${google_compute_instance.influx-grafana.network_interface.0.access_config.0.nat_ip}"
+}
+
 output "nat.ip" {
   value = "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}"
 }
