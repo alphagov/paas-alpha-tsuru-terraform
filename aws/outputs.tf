@@ -22,6 +22,14 @@ output "gandalf.public.ip" {
   value = "${aws_instance.gandalf.public_ip}"
 }
 
+output "influx-grafana.private.ip" {
+  value = "${aws_instance.influx-grafana.private_ip}"
+}
+
+output "influx-grafana.public.ip" {
+  value = "${aws_instance.influx-grafana.public_ip}"
+}
+
 output "nat.ip" {
   value = "${aws_instance.nat.public_ip}"
 }
