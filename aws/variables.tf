@@ -69,7 +69,17 @@ variable "registry_s3_rolename" {
 
 variable "registry_s3_bucketname" {
   description = "S3 Object Storage name for the registry"
-  default = "mcp.registry.storage"  
+  default = "mcp.registry.storage"
+}
+
+variable "postgres_s3_bucketname" {
+  description = "S3 Object Storage name for postgres"
+  default = "mcp.postgres.backup"
+}
+
+variable "postgres_s3_rolename" {
+  description = "IAM role name for postgres on S3"
+  default = "postgres-s3"
 }
 
 variable "key_pair_name" {
