@@ -53,3 +53,13 @@ resource "aws_route53_record" "postgresapi" {
   ttl = "60"
   records = ["${aws_elb.router.dns_name}"]
 }
+
+resource "aws_route53_record" "grafana" {
+  zone_id = "${var.dns_zone_id}"
+  name = "${var.env}-grafana.${var.dns_zone_name}"
+  type = "A"
+  ttl = "60"
+  records = ["${aws_instance.influx-grafana.public_ip}"]
+}
+
+
