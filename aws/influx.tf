@@ -1,20 +1,12 @@
-resource "google_compute_instance" "influx-grafana" {
-  name = "${var.env}-influx-grafana"
-  machine_type = "n1-standard-1"
-  zone = "${element(split(",", var.gce_zones), count.index)}"
-  disk {
-    image = "${var.os_image}"
-    size = 100
+resource "aws_instance" "influx-grafana" {
+  ami = "${lookup(var.amis, var.region)}"
+  instance_type = "t2.medium"
+  subnet_id = "${aws_subnet.public.0.id}"
+  associate_public_ip_address = true
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  key_name = "${var.key_pair_name}"
+  tags = {
+    Name = "${var.env}-influx-grafana"
   }
-  network_interface {
-    network = "${google_compute_network.network1.name}"
-  }
-  metadata {
-    sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
-  }
-  service_account {
-    scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
-  }
-  tags = [ "public", "web" ]
 }
 
