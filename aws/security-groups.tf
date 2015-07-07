@@ -103,6 +103,20 @@ resource "aws_security_group" "web" {
     cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
+  ingress {
+    from_port = 3000
+    to_port   = 3000
+    protocol  = "tcp"
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+  }
+
+  ingress {
+    from_port = 8083
+    to_port   = 8083
+    protocol  = "tcp"
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+  }
+
   tags {
     Name = "${var.env}-tsuru-web"
   }
