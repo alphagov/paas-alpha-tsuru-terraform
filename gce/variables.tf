@@ -66,3 +66,8 @@ variable "registry_gcs_bucketname_acl" {
   description = "GCS Bucket canned Access Control List"
   default = "projectPrivate"
 }
+
+variable "postgres_gcs_bucketname" {
+  description = "GCS Object Storage name for postgres"
+  default = "mcp-postgres-backup"
+}
