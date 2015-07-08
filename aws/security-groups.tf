@@ -103,6 +103,23 @@ resource "aws_security_group" "web" {
     cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
   }
 
+  tags {
+    Name = "${var.env}-tsuru-web"
+  }
+}
+
+resource "aws_security_group" "grafana" {
+  name = "${var.env}-grafana-tsuru"
+  description = "Security group for grafana that allows traffic from the office"
+  vpc_id = "${aws_vpc.default.id}"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   ingress {
     from_port = 3000
     to_port   = 3000
@@ -118,7 +135,7 @@ resource "aws_security_group" "web" {
   }
 
   tags {
-    Name = "${var.env}-tsuru-web"
+    Name = "${var.env}-influx-grafana"
   }
 }
 

@@ -54,6 +54,25 @@ resource "google_compute_firewall" "web" {
 
   allow {
     protocol = "tcp"
-    ports = [ 80, 8080, 443, 3000, 8083 ]
+    ports = [ 80, 8080, 443 ]
   }
 }
+resource "google_compute_firewall" "grafana" {
+  name = "${var.env}-grafana-tsuru"
+  description = "Security group for grafana that allows traffic from the office"
+  network = "${google_compute_network.network1.name}"
+
+  source_ranges = [
+    "${split(",", var.office_cidrs)}","${var.jenkins_elastic}",
+    "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}",
+    "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}",
+    "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}/32",
+  ]
+  target_tags = [ "grafana" ]
+
+  allow {
+    protocol = "tcp"
+    ports = [ 3000, 8083 ]
+  }
+}
+
