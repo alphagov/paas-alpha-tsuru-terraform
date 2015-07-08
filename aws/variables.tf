@@ -44,14 +44,6 @@ variable "amis" {
   }
 }
 
-variable "nat_ami" {
-  description = "Base AMI to launch the NAT instance with"
-  default = {
-    eu-west-1 = "ami-14913f63"
-    eu-central-1 = "ami-a8221fb5"
-  }
-}
-
 variable "dns_zone_id" {
   description = "Amazon Route53 DNS zone identifier"
   default = "ZAO40KKT7J2PB"
