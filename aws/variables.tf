@@ -64,11 +64,6 @@ variable "registry_s3_bucketname" {
   default = "mcp.registry.storage"
 }
 
-variable "postgres_s3_bucketname" {
-  description = "S3 Object Storage name for postgres"
-  default = "mcp.postgres.backup"
-}
-
 variable "postgres_s3_rolename" {
   description = "IAM role name for postgres on S3"
   default = "postgres-s3"

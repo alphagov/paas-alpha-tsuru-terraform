@@ -59,7 +59,7 @@ resource "aws_instance" "postgres" {
 }
 
 resource "aws_s3_bucket" "postgres-s3" {
-    bucket = "${var.env}-${var.postgres_s3_bucketname}"
+    bucket = "${var.env}-${var.postgres_bucketname}"
     acl = "private"
     force_destroy = "${var.force_destroy}"
 }

@@ -19,7 +19,7 @@ resource "google_compute_instance" "postgres" {
 }
 
 resource "google_storage_bucket" "postgres-gcs" {
-    name = "${var.env}-${var.postgres_gcs_bucketname}"
+    name = "${var.env}-${var.postgres_bucketname}"
     predefined_acl = "projectPrivate"
     location = "EU"
 }

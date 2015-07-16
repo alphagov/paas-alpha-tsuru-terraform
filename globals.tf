@@ -32,3 +32,8 @@ variable "force_destroy" {
   description = "Delete GCS and S3 buckets content"
   default     = false
 }
+
+variable "postgres_bucketname" {
+  description = "Bucket name for postgres WAL backups"
+  default = "mcp-postgres-backup"
+}
