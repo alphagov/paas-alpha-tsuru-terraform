@@ -46,6 +46,7 @@
 #}
 
 resource "aws_instance" "postgres" {
+  count = 2
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.private.0.id}"
