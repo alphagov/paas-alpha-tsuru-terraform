@@ -54,7 +54,7 @@ resource "aws_instance" "postgres" {
   iam_instance_profile = "${var.postgres_s3_rolename}"
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-tsuru-postgres"
+    Name = "${var.env}-tsuru-postgres-${count.index}"
   }
 }
 
