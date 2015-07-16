@@ -10,7 +10,7 @@ resource "google_compute_instance" "router" {
     network = "${google_compute_network.network1.name}"
   }
   metadata {
-    sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
+    sshKeys = "${var.user}:${file("${var.ssh_key_path}")}"
   }
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
