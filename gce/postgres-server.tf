@@ -1,5 +1,6 @@
 resource "google_compute_instance" "postgres" {
-  name = "${var.env}-tsuru-postgres"
+  count=2
+  name = "${var.env}-tsuru-postgres-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
