@@ -7,7 +7,7 @@ resource "aws_instance" "api" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-tsuru-api"
+    Name = "${var.env}-tsuru-api-${count.index}"
   }
 }
 

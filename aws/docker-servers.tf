@@ -7,7 +7,7 @@ resource "aws_instance" "tsuru-docker" {
   security_groups = ["${aws_security_group.default.id}"]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-tsuru-docker"
+    Name = "${var.env}-tsuru-docker-${count.index}"
   }
 }
 
