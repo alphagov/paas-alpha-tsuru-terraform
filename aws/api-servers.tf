@@ -31,25 +31,3 @@ resource "aws_elb" "api-ext" {
     lb_protocol = "tcp"
   }
 }
-
-resource "aws_elb" "api-int" {
-  name = "${var.env}-tsuru-api-elb-int"
-  subnets = ["${aws_subnet.private.*.id}"]
-  internal = true
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
-  instances = ["${aws_instance.api.*.id}"]
-
-  health_check {
-    target = "HTTPS:443/info"
-    interval = "${var.health_check_interval}"
-    timeout = "${var.health_check_timeout}"
-    healthy_threshold = "${var.health_check_healthy}"
-    unhealthy_threshold = "${var.health_check_unhealthy}"
-  }
-  listener {
-    instance_port = 443
-    instance_protocol = "tcp"
-    lb_port = 443
-    lb_protocol = "tcp"
-  }
-}
