@@ -1,5 +1,6 @@
 resource "google_compute_instance" "postgres" {
-  name = "${var.env}-tsuru-postgres"
+  count=2
+  name = "${var.env}-tsuru-postgres-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
@@ -9,7 +10,7 @@ resource "google_compute_instance" "postgres" {
     network = "${google_compute_network.network1.name}"
   }
   metadata {
-    sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
+    sshKeys = "${var.user}:${file("${var.ssh_key_path}")}"
   }
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
@@ -18,7 +19,7 @@ resource "google_compute_instance" "postgres" {
 }
 
 resource "google_storage_bucket" "postgres-gcs" {
-    name = "${var.env}-${var.postgres_gcs_bucketname}"
+    name = "${var.env}-${var.postgres_bucketname}"
     predefined_acl = "projectPrivate"
     location = "EU"
 }

@@ -11,7 +11,7 @@ resource "google_compute_instance" "influx-grafana" {
     access_config {}
   }
   metadata {
-    sshKeys = "${var.user}:${file(\"${var.ssh_key_path}")}"
+    sshKeys = "${var.user}:${file("${var.ssh_key_path}")}"
   }
   service_account {
     scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
