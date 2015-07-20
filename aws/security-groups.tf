@@ -100,7 +100,8 @@ resource "aws_security_group" "web" {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32",
+                   "${aws_instance.gandalf.public_ip}/32"]
   }
 
   tags {

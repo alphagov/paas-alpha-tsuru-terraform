@@ -49,6 +49,7 @@ resource "google_compute_firewall" "web" {
     "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}",
     "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}",
     "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}/32",
+     "${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}/32",
   ]
   target_tags = [ "web" ]
 
