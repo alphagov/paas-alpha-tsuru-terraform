@@ -34,8 +34,8 @@ output "nat.ip" {
   value = "${aws_instance.nat.public_ip}"
 }
 
-output "postgres.private_ip" {
-  value = "${aws_instance.postgres.private_ip}"
+output "postgres.*.private_ip" {
+  value = "${join(",", aws_instance.postgres.*.private_ip)}"
 }
 
 output "router.*.ip" {

@@ -34,8 +34,8 @@ output "nat.ip" {
   value = "${google_compute_instance.nat.network_interface.0.access_config.0.nat_ip}"
 }
 
-output "postgres.private_ip" {
-  value = "${google_compute_instance.postgres.network_interface.0.address}"
+output "postgres.*.private_ip" {
+  value = "${join(",", google_compute_instance.postgres.*.network_interface.0.address)}"
 }
 
 output "router.*.private_ip" {
