@@ -6,8 +6,8 @@ output "db.private_ip" {
   value = "${google_compute_instance.db.network_interface.0.address}"
 }
 
-output "docker.private_ip" {
-  value = "${google_compute_instance.docker.network_interface.0.address}"
+output "docker.*.private_ip" {
+  value = "${join(",", google_compute_instance.docker.*.network_interface.0.address)}"
 }
 
 output "docker-registry.private_ip" {

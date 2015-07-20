@@ -6,8 +6,8 @@ output "tsuru-db.ip" {
   value = "${aws_instance.tsuru-db.private_ip}"
 }
 
-output "docker.private.ip" {
-  value = "${aws_instance.tsuru-docker.private_ip}"
+output "tsuru-docker.*.private.ip" {
+  value = "${join(",", aws_instance.tsuru-docker.*.private_ip)}"
 }
 
 output "docker-registry.private_ip" {
