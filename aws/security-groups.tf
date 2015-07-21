@@ -100,7 +100,8 @@ resource "aws_security_group" "web" {
     from_port = 443
     to_port   = 443
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32",
+                   "${aws_instance.gandalf.public_ip}/32"]
   }
 
   tags {
@@ -137,18 +138,4 @@ resource "aws_security_group" "grafana" {
   tags {
     Name = "${var.env}-influx-grafana"
   }
-}
-
-/* FIXME: Unused, remove when deployed to CI */
-resource "aws_security_group" "web-int" {
-  name = "${var.env}-web-int-tsuru"
-  description = "Security group for web that allows web traffic from internet"
-  vpc_id = "${aws_vpc.default.id}"
-}
-
-/* FIXME: Unused, remove when deployed to CI */
-resource "aws_security_group" "sslproxy" {
-  name = "${var.env}-tsuru-sslproxy"
-  description = "Security group for sslproxy/offloader feedind the tsuru router elb"
-  vpc_id = "${aws_vpc.default.id}"
 }
