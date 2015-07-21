@@ -38,6 +38,14 @@ resource "google_dns_record_set" "docker-registry" {
   rrdatas = ["${google_compute_instance.docker-registry.network_interface.0.address}"]
 }
 
+resource "google_dns_record_set" "postgres-master" {
+  managed_zone = "${var.dns_zone_id}"
+  name = "${var.env}-postgres-master.${var.dns_zone_name}"
+  type = "A"
+  ttl = "60"
+  rrdatas = ["${google_compute_instance.postgres.0.network_interface.0.address}"]
+}
+
 resource "google_dns_record_set" "postgresapi" {
   managed_zone = "${var.dns_zone_id}"
   name = "${var.env}-postgresapi.${var.dns_zone_name}"
