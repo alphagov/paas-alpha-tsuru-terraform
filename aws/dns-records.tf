@@ -46,6 +46,14 @@ resource "aws_route53_record" "docker-registry" {
   records = ["${aws_instance.docker-registry.private_ip}"]
 }
 
+resource "aws_route53_record" "postgres-master" {
+  zone_id = "${var.dns_zone_id}"
+  name = "${var.env}-postgres-master.${var.dns_zone_name}"
+  type = "A"
+  ttl = "60"
+  records = ["${aws_instance.postgres.0.private_ip}"]
+}
+
 resource "aws_route53_record" "postgresapi" {
   zone_id = "${var.dns_zone_id}"
   name = "${var.env}-postgresapi.${var.dns_zone_name}"
