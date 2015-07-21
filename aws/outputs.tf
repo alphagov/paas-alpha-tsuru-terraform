@@ -6,8 +6,8 @@ output "tsuru-db.ip" {
   value = "${aws_instance.tsuru-db.private_ip}"
 }
 
-output "docker.private.ip" {
-  value = "${aws_instance.tsuru-docker.private_ip}"
+output "tsuru-docker.*.private.ip" {
+  value = "${join(",", aws_instance.tsuru-docker.*.private_ip)}"
 }
 
 output "docker-registry.private_ip" {
@@ -34,8 +34,8 @@ output "nat.ip" {
   value = "${aws_instance.nat.public_ip}"
 }
 
-output "postgres.private_ip" {
-  value = "${aws_instance.postgres.private_ip}"
+output "postgres.*.private_ip" {
+  value = "${join(",", aws_instance.postgres.*.private_ip)}"
 }
 
 output "router.*.ip" {
