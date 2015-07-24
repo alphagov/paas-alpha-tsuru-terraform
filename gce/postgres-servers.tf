@@ -22,4 +22,5 @@ resource "google_storage_bucket" "postgres-gcs" {
     name = "${var.env}-${var.postgres_bucketname}"
     predefined_acl = "projectPrivate"
     location = "EU"
+    force_destroy = "${var.force_destroy}"
 }
