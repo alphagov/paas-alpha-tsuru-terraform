@@ -70,4 +70,10 @@ resource "aws_route53_record" "grafana" {
   records = ["${aws_instance.influx-grafana.public_ip}"]
 }
 
-
+resource "aws_route53_record" "elasticsearchapi" {
+  zone_id = "${var.dns_zone_id}"
+  name = "${var.env}-elasticsearchapi.${var.dns_zone_name}"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.router.dns_name}"]
+}

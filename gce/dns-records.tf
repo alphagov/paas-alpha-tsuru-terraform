@@ -53,6 +53,7 @@ resource "google_dns_record_set" "postgresapi" {
   ttl = "60"
   rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
 }
+
 resource "google_dns_record_set" "grafana" {
   managed_zone = "${var.dns_zone_id}"
   name = "${var.env}-grafana.${var.dns_zone_name}"
@@ -61,3 +62,10 @@ resource "google_dns_record_set" "grafana" {
   rrdatas = ["${google_compute_instance.influx-grafana.network_interface.0.access_config.0.nat_ip}"]
 }
 
+resource "google_dns_record_set" "elasticsearchapi" {
+  managed_zone = "${var.dns_zone_id}"
+  name = "${var.env}-elasticsearchapi.${var.dns_zone_name}"
+  type = "A"
+  ttl = "60"
+  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
+}
