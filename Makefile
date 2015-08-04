@@ -32,3 +32,7 @@ start-aws: check-env-var check-env-aws
 
 start-gce: check-env-var
 	$(call TERRAFORM_CMD,gce,apply)
+
+start-azure: check-env-var
+	cd azure && \
+	$(call TERRAFORM_CMD,azure,apply)
