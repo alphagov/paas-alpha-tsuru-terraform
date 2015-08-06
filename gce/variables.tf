@@ -38,6 +38,11 @@ variable "os_image" {
   default = "ubuntu-1404-trusty-v20150316"
 }
 
+variable "coreos_image" {
+  description = "coreOS image to deploy our coreOS instances"
+  default = "coreos-stable-723-3-0-v20150804"
+}
+
 variable "network1_cidr" {
   description = "CIDR for network1"
   default     = "10.129.0.0/24"
