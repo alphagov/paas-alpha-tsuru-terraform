@@ -63,6 +63,3 @@ For usage, refer to the [Terraform CLI doc](https://www.terraform.io/docs/comman
 To create your own environment, you need to pass a variable of the name you want to give it, e.g. `terraform apply -var env=my-new-environment`.
 
 This should be enough to create a fresh environment. However, sometimes we make changes that mean you'll need to make other adjustments if you've previously created an environment. The file [upgrade_compatibility](/upgrade_compatibility.md) shows some of the errors you might see, and their solutions.
-
-We have found that `terraform destroy` doesn't work reliably. Possible cause [this issue](https://github.com/hashicorp/terraform/issues/1203). Workaround is to delete manually via the console.
-
