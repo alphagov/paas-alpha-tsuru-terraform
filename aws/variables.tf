@@ -40,6 +40,14 @@ variable "amis" {
   }
 }
 
+variable "coreos" {
+  description = "AMIs to launch coreOS instances"
+  default = {
+    eu-west-1 = "ami-0e104179"
+    eu-central-1 = "ami-b8cecaa5"
+  }
+}
+
 variable "dns_zone_id" {
   description = "Amazon Route53 DNS zone identifier"
   default = "ZAO40KKT7J2PB"
