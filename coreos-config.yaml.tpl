@@ -31,4 +31,4 @@ coreos:
         - name: 50-insecure-registry.conf
           content: |
             [Service]
-            Environment=DOCKER_OPTS='--insecure-registry="${docker_regisry_internal_ip}/32"'
+            Environment=DOCKER_OPTS='--insecure-registry="${docker_regisry_host}"'
