@@ -18,7 +18,7 @@ resource "template_file" "etcd_cloud_config" {
   filename = "../coreos-config.yaml.tpl"
   vars {
     etcd_discovery_url = "${file("ETCD_CLUSTER_ID")}"
-    docker_regisry_host = "${replace(aws_route53_record.docker-registry.name, "/\.$/", ":${var.registry_port}")}"
+    docker_registry_host = "${replace(aws_route53_record.docker-registry.name, "/\.$/", ":${var.registry_port}")}"
   }
 }
 
