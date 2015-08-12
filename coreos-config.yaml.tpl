@@ -25,8 +25,8 @@ coreos:
 
         [Install]
         WantedBy=sockets.target
-
     - name: docker.service
+      command: start
       drop-ins:
         - name: 50-insecure-registry.conf
           content: |
