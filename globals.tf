@@ -41,3 +41,13 @@ variable "postgres_bucketname" {
   description = "Bucket name for postgres WAL backups"
   default = "mcp-postgres-backup"
 }
+
+variable "docker_count" {
+  description = "Number of docker nodes. For CoreOS this should be at least 3 and even, to make etcd quorums easier"
+  default = 3
+}
+
+variable "registry_port" {
+  description = "Port the registry servers on."
+  default = 6000
+}

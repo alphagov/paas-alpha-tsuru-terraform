@@ -1,5 +1,5 @@
 resource "aws_instance" "tsuru-db" {
-  ami = "${lookup(var.amis, var.region)}"
+  ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private.0.id}"
   security_groups = ["${aws_security_group.default.id}"]

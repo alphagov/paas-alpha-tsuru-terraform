@@ -8,6 +8,7 @@ variable "zones" {
   default     = {
     zone0 = "eu-west-1a"
     zone1 = "eu-west-1b"
+    zone2 = "eu-west-1c"
   }
 }
 
@@ -21,6 +22,7 @@ variable "public_cidrs" {
   default     = {
     zone0 = "10.128.10.0/24"
     zone1 = "10.128.12.0/24"
+    zone2 = "10.128.14.0/24"
   }
 }
 
@@ -29,14 +31,23 @@ variable "private_cidrs" {
   default     = {
     zone0 = "10.128.11.0/24"
     zone1 = "10.128.13.0/24"
+    zone2 = "10.128.15.0/24"
   }
 }
 
-variable "amis" {
+variable "ubuntu_amis" {
   description = "Base AMI to launch the instances with"
   default = {
     eu-west-1 = "ami-234ecc54"
     eu-central-1 = "ami-9a380b87"
+  }
+}
+
+variable "coreos_amis" {
+  description = "AMIs to launch coreOS instances"
+  default = {
+    eu-west-1 = "ami-0e104179"
+    eu-central-1 = "ami-b8cecaa5"
   }
 }
 
