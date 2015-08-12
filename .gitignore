@@ -3,5 +3,3 @@ aws/ssh/
 gce/terraform.tfstate*
 gce/ssh/
 gce/account.json
-aws/ETCD_CLUSTER_ID
-gce/ETCD_CLUSTER_ID
