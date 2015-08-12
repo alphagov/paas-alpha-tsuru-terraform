@@ -1,7 +1,7 @@
 resource "aws_instance" "coreos-docker" {
   depends_on = [ "template_file.etcd_cloud_config" ]
   count = "${var.docker_count}"
-  ami = "${lookup(var.coreos, var.region)}"
+  ami = "${lookup(var.coreos_amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
   availability_zone = "${element(aws_subnet.private.*.availability_zone, count.index)}"

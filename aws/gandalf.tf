@@ -1,5 +1,5 @@
 resource "aws_instance" "gandalf" {
-  ami = "${lookup(var.amis, var.region)}"
+  ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.public.0.id}"
   associate_public_ip_address = true

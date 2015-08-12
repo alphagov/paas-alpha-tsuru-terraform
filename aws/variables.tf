@@ -35,7 +35,7 @@ variable "private_cidrs" {
   }
 }
 
-variable "amis" {
+variable "ubuntu_amis" {
   description = "Base AMI to launch the instances with"
   default = {
     eu-west-1 = "ami-234ecc54"
@@ -43,7 +43,7 @@ variable "amis" {
   }
 }
 
-variable "coreos" {
+variable "coreos_amis" {
   description = "AMIs to launch coreOS instances"
   default = {
     eu-west-1 = "ami-0e104179"
