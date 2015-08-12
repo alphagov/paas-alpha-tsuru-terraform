@@ -11,7 +11,7 @@ resource "google_compute_instance" "coreos-docker" {
     network = "${google_compute_network.network1.name}"
   }
   metadata {
-    sshKeys = "${var.user}:${file("${var.ssh_key_path}")}"
+    sshKeys = "core:${file("${var.ssh_key_path}")}"
     user-data = "${template_file.etcd_cloud_config.rendered}"
   }
   service_account {
