@@ -11,7 +11,7 @@ all:
 	$(error Usage: make <prep|start-aws|start-gce> DEPLOY_ENV=name [ARGS=extra_args])
 
 prep:
-	touch {aws,gce}/ETCD_CLUSTER_ID
+	touch aws/ETCD_CLUSTER_ID gce/ETCD_CLUSTER_ID
 
 check-env-aws: check-env-var
 ifndef AWS_SECRET_ACCESS_KEY
