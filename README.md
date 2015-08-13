@@ -25,6 +25,15 @@ You can get the credentials from the AWS console.
 
 ### Provision the environment
 
+Before doing anything you will need prepare some files for Terraform:
+
+    make prep
+
+If you don't, you will get this error:
+
+    * file: open ETCD_CLUSTER_ID: no such file or directory in:
+    ${file("ETCD_CLUSTER_ID")}
+
 In order to provision a test environment:
 
  1. Go to the desired platform directory:  `cd aws` or `cd gce`
