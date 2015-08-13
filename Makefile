@@ -1,4 +1,5 @@
 .PHONY: all \
+	prep \
 	aws start-aws start-gce
 
 TERRAFORM_CMD = cd $(1) && \
@@ -7,7 +8,10 @@ TERRAFORM_CMD = cd $(1) && \
 	${ARGS} && cd ..
 
 all:
-	$(error Usage: make <start-aws|start-gce> DEPLOY_ENV=name [ARGS=extra_args])
+	$(error Usage: make <prep|start-aws|start-gce> DEPLOY_ENV=name [ARGS=extra_args])
+
+prep:
+	touch aws/ETCD_CLUSTER_ID gce/ETCD_CLUSTER_ID
 
 check-env-aws: check-env-var
 ifndef AWS_SECRET_ACCESS_KEY
