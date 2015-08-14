@@ -52,6 +52,11 @@ variable "coreos_admin_count" {
   default = 3
 }
 
+variable "coreos_router_count" {
+  description = "Number of coreos router nodes."
+  default = 2
+}
+
 variable "registry_port" {
   description = "Port the registry servers on."
   default = 6000
