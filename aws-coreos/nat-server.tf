@@ -15,4 +15,11 @@ resource "aws_instance" "nat" {
   provisioner "remote-exec" {
     script = "../setup-nat-routing.sh"
   }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo adduser --disabled-password --gecos '' core",
+      "sudo cp -Ra /home/ubuntu/.ssh /home/core/.ssh",
+      "sudo chown -R core:core /home/core/.ssh"
+    ]
+  }
 }
