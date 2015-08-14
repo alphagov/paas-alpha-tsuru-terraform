@@ -15,7 +15,7 @@ resource "google_compute_instance" "postgres" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "private", "postgres" ]
 }
 
 resource "google_storage_bucket" "postgres-gcs" {

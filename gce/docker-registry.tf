@@ -15,7 +15,7 @@ resource "google_compute_instance" "docker-registry" {
   service_account {
     scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "private", "docker-registry" ]
 }
 
 resource "google_storage_bucket" "registry-gcs" {

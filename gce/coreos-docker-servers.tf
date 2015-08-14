@@ -17,7 +17,7 @@ resource "google_compute_instance" "coreos-docker" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "private", "docker-node" ]
 }
 
 resource "template_file" "etcd_cloud_config" {
