@@ -40,7 +40,7 @@ resource "aws_security_group" "docker_node" {
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
-      from_port = 0
+      from_port = 4243
       to_port = 4243
       protocol = "tcp"
       security_groups = [

@@ -18,7 +18,7 @@ resource "aws_security_group" "elasticsearch" {
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
-    from_port = 0
+    from_port = 9200
     to_port   = 9200
     protocol  = "tcp"
     security_groups = [

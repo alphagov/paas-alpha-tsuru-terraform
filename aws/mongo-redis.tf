@@ -19,7 +19,7 @@ resource "aws_security_group" "mongodb" {
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
-      from_port = 0
+      from_port = 27017
       to_port = 27017
       protocol = "tcp"
       security_groups = [
@@ -39,7 +39,7 @@ resource "aws_security_group" "redis" {
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
-      from_port = 0
+      from_port = 6379
       to_port = 6379
       protocol = "tcp"
       security_groups = [

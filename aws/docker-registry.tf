@@ -77,10 +77,11 @@ resource "aws_security_group" "docker_registry" {
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
-      from_port = 0
+      from_port = 6000
       to_port = 6000
       protocol = "tcp"
       security_groups = [
+      "${aws_security_group.tsuru_api.id}",
         "${aws_security_group.docker_node.id}"
       ]
   }
