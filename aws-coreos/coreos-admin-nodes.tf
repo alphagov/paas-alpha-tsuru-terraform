@@ -11,7 +11,7 @@ resource "template_file" "coreos-admin-config" {
   depends_on = [ "etcd_discovery.tsuru" ]
   filename = "coreos-admin-config.yaml.tpl"
   vars {
-    role_name = "admin"
+    fleet_metadata = "role=admin"
     etcd_discovery_url = "${etcd_discovery.tsuru.url}"
   }
 }

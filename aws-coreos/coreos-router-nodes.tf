@@ -11,7 +11,7 @@ resource "template_file" "coreos-router-config" {
   filename = "coreos-router-config.yaml.tpl"
   vars {
     etcd_servers = "http://${aws_instance.coreos-admin.0.private_ip}:2379"
-    role_name = "admin"
+    fleet_metadata = "role=router,platform=aws"
   }
 }
 
