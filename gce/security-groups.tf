@@ -6,6 +6,22 @@ resource "google_compute_firewall" "internal" {
   source_tags = [ "public", "private" ]
   target_tags = [ "public", "private" ]
 
+  allow {
+    protocol = "tcp"
+    ports = [22]
+  }
+  allow { protocol = "udp" }
+  allow { protocol = "icmp" }
+}
+
+resource "google_compute_firewall" "internal-to-nat" {
+  name = "${var.env}-tsuru-internal-to-nat"
+  description = "Security group for internally routed traffic to nat"
+  network = "${google_compute_network.network1.name}"
+
+  source_tags = [ "public", "private" ]
+  target_tags = [ "public", "nat" ]
+
   allow { protocol = "tcp" }
   allow { protocol = "udp" }
   allow { protocol = "icmp" }
