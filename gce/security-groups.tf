@@ -157,3 +157,20 @@ resource "google_compute_firewall" "mongodb" {
     }
 }
 
+resource "google_compute_firewall" "redis" {
+    name = "${var.env}-redis-tsuru"
+    description = "Firewall rules for internal access to the redis servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.api.*.network_interface.0.address}",
+      "${google_compute_instance.router.*.network_interface.0.address}"
+    ]
+    source_tags = ["api", "router"]
+    target_tags = ["redis"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["6379"]
+    }
+}
+
