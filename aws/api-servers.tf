@@ -42,7 +42,8 @@ resource "aws_elb" "api-int" {
   subnets = ["${aws_subnet.private.*.id}"]
   internal = true
   security_groups = [
-    "${aws_security_group.web.id}"
+    "${aws_security_group.web.id}",
+    "${aws_security_group.tsuru_api_int_elb.id}"
   ]
   instances = ["${aws_instance.api.*.id}"]
 
@@ -58,6 +59,25 @@ resource "aws_elb" "api-int" {
     instance_protocol = "tcp"
     lb_port = 443
     lb_protocol = "tcp"
+  }
+}
+
+resource "aws_security_group" "tsuru_api_int_elb" {
+  name = "${var.env}-tsuru-api-int-elb"
+  description = "Tsuru API Internal ELB security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    security_groups = [
+      "${aws_security_group.gandalf.id}"
+    ]
+  }
+
+  tags = {
+    Name = "${var.env}-tsuru-api-int-elb"
   }
 }
 
