@@ -208,3 +208,19 @@ resource "google_compute_firewall" "docker-node" {
     }
 }
 
+resource "google_compute_firewall" "docker-node-healthcheck" {
+    name = "${var.env}-docker-node-healthcheck-tsuru"
+    description = "Firewall rules for internal access to the docker servers for healthcheck"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.api.*.network_interface.0.address}"
+    ]
+    source_tags = ["api"]
+    target_tags = ["docker-node"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["1024-65535"]
+    }
+}
+
