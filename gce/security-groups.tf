@@ -224,3 +224,20 @@ resource "google_compute_firewall" "docker-node-healthcheck" {
     }
 }
 
+resource "google_compute_firewall" "docker-registry" {
+    name = "${var.env}-docker-registry-tsuru"
+    description = "Firewall rules for internal access to the docker registry servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.coreos-docker.*.network_interface.0.address}",
+      "${google_compute_instance.api.*.network_interface.0.address}"
+    ]
+    source_tags = ["docker-node"]
+    target_tags = ["docker-registry"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["6000"]
+    }
+}
+
