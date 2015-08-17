@@ -125,3 +125,19 @@ resource "google_compute_firewall" "influxdb" {
   }
 }
 
+resource "google_compute_firewall" "api" {
+    name = "${var.env}-api-tsuru"
+    description = "Firewall rules for internal access to the api servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.gandalf.network_interface.0.address}"
+    ]
+    source_tags = ["gandalf"]
+    target_tags = ["api"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["80"]
+    }
+}
+
