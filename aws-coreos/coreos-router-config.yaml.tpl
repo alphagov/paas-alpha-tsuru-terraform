@@ -3,7 +3,7 @@
 coreos:
   fleet:
     etcd_servers: ${etcd_servers}
-    metadata: "role=router,provider=aws"
+    metadata: "${fleet_metadata}"
   units:
     - name: fleet-tcp.socket
       command: start
