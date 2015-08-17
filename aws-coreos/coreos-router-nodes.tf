@@ -64,3 +64,34 @@ resource "aws_elb" "coreos_static_router" {
   }
 }
 
+resource "aws_elb" "coreos_dynamic_router" {
+  name = "${var.env}-tsuru-rb-elb"
+  subnets = ["${aws_subnet.public.*.id}"]
+  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+
+  health_check {
+    target = "TCP:8080"
+    interval = "${var.health_check_interval}"
+    timeout = "${var.health_check_timeout}"
+    healthy_threshold = "${var.health_check_healthy}"
+    unhealthy_threshold = "${var.health_check_unhealthy}"
+  }
+  listener {
+    instance_port = 8080
+    instance_protocol = "http"
+    lb_port = 8080
+    lb_protocol = "http"
+  }
+  listener {
+    instance_port = 80
+    instance_protocol = "http"
+    lb_port = 80
+    lb_protocol = "http"
+  }
+  listener {
+    instance_port = 443
+    instance_protocol = "tcp"
+    lb_port = 443
+    lb_protocol = "tcp"
+  }
+}
