@@ -76,6 +76,12 @@ variable "postgres_s3_rolename" {
   default = "postgres-s3"
 }
 
+variable "elb_presence_rolename" {
+  description = "IAM role name for elb-presence"
+  default = "elb-presence"
+}
+
+
 variable "key_pair_name" {
   description = "SSH Key Pair name to be used to launch EC2 instances"
   default     = "deployer-tsuru-example"

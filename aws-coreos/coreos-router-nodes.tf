@@ -64,6 +64,57 @@ resource "aws_elb" "coreos_static_router" {
   }
 }
 
+
+#
+# These resources are commented because not all of us have access to create
+# and modify things in IAM. This has been run once by dcarley and remains
+# here for reference or future modification.
+#
+# resource "aws_iam_role" "elb-presence" {
+#   name = "${var.elb_presence_rolename}"
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Sid": "",
+#       "Effect": "Allow",
+#       "Principal": { "Service": "ec2.amazonaws.com" },
+#       "Action": "sts:AssumeRole"
+#     }
+#   ]
+# }
+# EOF
+# }
+#
+# resource "aws_iam_role_policy" "elb-presence" {
+#   name   = "${var.elb_presence_rolename}"
+#   role   = "${aws_iam_role.elb-presence.id}"
+#   policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Sid": "",
+#       "Effect": "Allow",
+#       "Action": [
+#         "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+#         "elasticloadbalancing:RegisterInstancesWithLoadBalancer"
+#       ],
+#       "Resource": [
+#         "arn:aws:elasticloadbalancing:::*-dyn-elb",
+#       ]
+#     }
+#   ]
+# }
+# EOF
+# }
+#
+# resource "aws_iam_instance_profile" "elb-presence" {
+#   name  = "${var.elb_presence_rolename}"
+#   roles = [ "${aws_iam_role.elb-presence.id}" ]
+# }
+
 resource "aws_elb" "coreos_dynamic_router" {
   name = "${var.env}-tsuru-dyn-elb"
   subnets = ["${aws_subnet.public.*.id}"]
