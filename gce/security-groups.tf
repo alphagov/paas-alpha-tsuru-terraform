@@ -27,6 +27,24 @@ resource "google_compute_firewall" "internal-to-nat" {
   allow { protocol = "icmp" }
 }
 
+resource "google_compute_firewall" "router" {
+  name = "${var.env}-router-tsuru"
+  description = "Security group for router traffic"
+  network = "${google_compute_network.network1.name}"
+
+  source_ranges = [
+    "${google_compute_instance.coreos-docker.*.network_interface.0.address}"
+  ]
+  source_tags = [ "router" ]
+  target_tags = [ "docker-node" ]
+
+  allow {
+    protocol = "tcp"
+    ports = ["1024-65535"]
+  }
+
+}
+
 resource "google_compute_firewall" "nat" {
   name = "${var.env}-nat-tsuru"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet"
