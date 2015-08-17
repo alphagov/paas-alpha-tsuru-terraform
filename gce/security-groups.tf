@@ -141,3 +141,19 @@ resource "google_compute_firewall" "api" {
     }
 }
 
+resource "google_compute_firewall" "mongodb" {
+    name = "${var.env}-mongodb-tsuru"
+    description = "Firewall rules for internal access to the mongodb servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.api.*.network_interface.0.address}"
+    ]
+    source_tags = ["api", "gandalf"]
+    target_tags = ["mongo"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["27017"]
+    }
+}
+
