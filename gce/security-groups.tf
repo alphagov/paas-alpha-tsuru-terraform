@@ -174,3 +174,20 @@ resource "google_compute_firewall" "redis" {
     }
 }
 
+resource "google_compute_firewall" "postgres" {
+    name = "${var.env}-postgres-tsuru"
+    description = "Firewall rules for internal access to the postgreSQL servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.api.*.network_interface.0.address}",
+      "${google_compute_instance.coreos-docker.*.network_interface.0.address}"
+    ]
+    source_tags = ["api", "docker-node", "postgres"]
+    target_tags = ["postgres"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["5432"]
+    }
+}
+
