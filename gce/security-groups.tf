@@ -241,3 +241,18 @@ resource "google_compute_firewall" "docker-registry" {
     }
 }
 
+resource "google_compute_firewall" "elasticsearch-internal" {
+    name = "${var.env}-elasticsearch-internal-tsuru"
+    description = "Firewall rules for internal access to the elasticsearch servers"
+    network = "${google_compute_network.network1.name}"
+    source_ranges = [
+      "${google_compute_instance.coreos-docker.*.network_interface.0.address}"
+    ]
+    source_tags = ["docker-node"]
+    target_tags = ["elasticsearch"]
+
+    allow {
+        protocol = "tcp"
+        ports = ["9200"]
+    }
+}
