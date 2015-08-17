@@ -47,7 +47,9 @@ resource "aws_security_group" "grafana" {
     from_port = 8086
     to_port   = 8086
     protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+    security_groups = [
+      "${aws_security_group.default.id}"
+    ]
   }
 
   tags {
