@@ -110,3 +110,18 @@ resource "google_compute_firewall" "grafana" {
   }
 }
 
+resource "google_compute_firewall" "influxdb" {
+  name = "${var.env}-influxdb-tsuru"
+  description = "Security group for influxdb that allows inbound traffic from all private machines"
+  network = "${google_compute_network.network1.name}"
+
+
+  source_tags = [ "private" ]
+  target_tags = [ "influxdb" ]
+
+  allow {
+    protocol = "tcp"
+    ports = [ 8086 ]
+  }
+}
+
