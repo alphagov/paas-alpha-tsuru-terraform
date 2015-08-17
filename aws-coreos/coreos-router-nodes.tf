@@ -65,7 +65,7 @@ resource "aws_elb" "coreos_static_router" {
 }
 
 resource "aws_elb" "coreos_dynamic_router" {
-  name = "${var.env}-tsuru-rb-elb"
+  name = "${var.env}-tsuru-dyn-elb"
   subnets = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
 
