@@ -15,7 +15,7 @@ resource "google_compute_instance" "router" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  tags = [ "private", "web" ]
+  tags = [ "private", "web", "router" ]
 }
 
 resource "google_compute_target_pool" "router" {

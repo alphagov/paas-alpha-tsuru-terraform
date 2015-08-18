@@ -14,5 +14,5 @@ resource "google_compute_instance" "elasticsearch" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "private", "elasticsearch" ]
 }

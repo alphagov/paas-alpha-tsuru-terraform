@@ -14,5 +14,5 @@ resource "google_compute_instance" "db" {
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
   }
-  tags = [ "private" ]
+  tags = [ "private" , "mongo", "redis"]
 }

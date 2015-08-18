@@ -16,6 +16,5 @@ resource "google_compute_instance" "influx-grafana" {
   service_account {
     scopes = [ "compute-ro", "storage-rw", "userinfo-email" ]
   }
-  tags = [ "public", "grafana" ]
+  tags = [ "public", "grafana", "influxdb" ]
 }
-
