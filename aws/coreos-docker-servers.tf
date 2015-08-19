@@ -44,7 +44,24 @@ resource "aws_security_group" "docker_node" {
       to_port = 65535
       protocol = "tcp"
       security_groups = [
-        "${aws_security_group.tsuru_api.id}",
+        "${aws_security_group.tsuru_api.id}"
+      ]
+  }
+
+  ingress {
+      from_port = 1024
+      to_port = 4242
+      protocol = "tcp"
+      security_groups = [
+        "${aws_security_group.router.id}"
+      ]
+  }
+
+  ingress {
+      from_port = 4244
+      to_port = 65535
+      protocol = "tcp"
+      security_groups = [
         "${aws_security_group.router.id}"
       ]
   }
