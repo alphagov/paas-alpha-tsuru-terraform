@@ -139,20 +139,18 @@ resource "google_compute_firewall" "influxdb" {
   }
 }
 
-resource "google_compute_firewall" "api" {
-    name = "${var.env}-api-tsuru"
-    description = "Firewall rules for internal access to the api servers"
-    network = "${google_compute_network.network1.name}"
-    source_ranges = [
-      "${google_compute_instance.gandalf.network_interface.0.address}"
-    ]
-    source_tags = ["gandalf"]
-    target_tags = ["api"]
+resource "google_compute_firewall" "api-to-gandalf" {
+  name = "${var.env}-tsuru-api-to-gandalf"
+  description = "Security group to allow 8080 and 3232 (archive) from API to Gandalf"
+  network = "${google_compute_network.network1.name}"
 
-    allow {
-        protocol = "tcp"
-        ports = ["80"]
-    }
+  source_tags = [ "api" ]
+  target_tags = [ "gandalf" ]
+
+  allow {
+    protocol = "tcp"
+    ports = [ 8080, 3232 ]
+  }
 }
 
 resource "google_compute_firewall" "mongodb" {
