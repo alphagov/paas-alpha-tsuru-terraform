@@ -19,8 +19,8 @@ resource "google_compute_firewall" "internal-to-nat" {
   description = "Security group for internally routed traffic to nat"
   network = "${google_compute_network.network1.name}"
 
-  source_tags = [ "public", "private" ]
-  target_tags = [ "public", "nat" ]
+  source_tags = [ "private" ]
+  target_tags = [ "nat" ]
 
   allow { protocol = "tcp" }
   allow { protocol = "udp" }
