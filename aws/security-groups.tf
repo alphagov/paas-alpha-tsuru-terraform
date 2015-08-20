@@ -1,72 +1,26 @@
 resource "aws_security_group" "default" {
   name = "${var.env}-default-tsuru"
-  description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
+  description = "Default security group which allows SSH access and outbound traffic"
   vpc_id = "${aws_vpc.default.id}"
 
+  # Allow inbound SSH access
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    self            = true
+  }
+
+  # Allow outbound traffic via NAT box
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    self        = true
   }
 
   tags {
     Name = "${var.env}-tsuru-default"
-  }
-}
-
-resource "aws_security_group" "nat" {
-  name = "${var.env}-nat-tsuru"
-  description = "Security group for nat instances that allows SSH and VPN traffic from internet"
-  vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
-  }
-
-  tags {
-    Name = "${var.env}-tsuru-nat"
-  }
-}
-
-resource "aws_security_group" "gandalf" {
-  name = "${var.env}-tsuru-gandalf"
-  description = "Security group for Gandalf instance that allows SSH access from internet"
-  vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
-  }
-
-  tags {
-    Name = "${var.env}-tsuru-gandalf"
   }
 }
 
@@ -105,37 +59,6 @@ resource "aws_security_group" "web" {
 
   tags {
     Name = "${var.env}-tsuru-web"
-  }
-}
-
-resource "aws_security_group" "grafana" {
-  name = "${var.env}-grafana-tsuru"
-  description = "Security group for grafana that allows traffic from the office"
-  vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 3000
-    to_port   = 3000
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
-  }
-
-  ingress {
-    from_port = 8083
-    to_port   = 8083
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
-  }
-
-  tags {
-    Name = "${var.env}-influx-grafana"
   }
 }
 
