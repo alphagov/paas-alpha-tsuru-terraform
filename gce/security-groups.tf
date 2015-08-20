@@ -1,10 +1,10 @@
-resource "google_compute_firewall" "internal" {
-  name = "${var.env}-tsuru-internal"
+resource "google_compute_firewall" "nat-to-internal" {
+  name = "${var.env}-tsuru-nat-to-internal"
   description = "Security group for internally routed traffic"
   network = "${google_compute_network.network1.name}"
 
-  source_tags = [ "public", "private" ]
-  target_tags = [ "public", "private" ]
+  source_tags = [ "nat" ]
+  target_tags = [ "private" ]
 
   allow {
     protocol = "tcp"
