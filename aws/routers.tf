@@ -19,7 +19,6 @@ resource "aws_elb" "router" {
   subnets = ["${aws_subnet.public.*.id}"]
   security_groups = [
     "${aws_security_group.web.id}",
-    "${aws_security_group.router_loadbalancer.id}",
   ]
   instances = ["${aws_instance.router.*.id}"]
 
@@ -44,16 +43,6 @@ resource "aws_elb" "router" {
   }
 }
 
-resource "aws_security_group" "router_loadbalancer" {
-  name = "${var.env}-router_loadbalancer"
-  description = "Router load balancer security group"
-  vpc_id = "${aws_vpc.default.id}"
-
-  tags = {
-    Name = "${var.env}-tsuru-router-loadbalancer"
-  }
-}
-
 resource "aws_security_group" "router" {
   name = "${var.env}-router"
   description = "Router security group"
@@ -64,7 +53,7 @@ resource "aws_security_group" "router" {
     to_port   = 80
     protocol  = "tcp"
     security_groups = [
-      "${aws_security_group.router_loadbalancer.id}",
+      "${aws_security_group.web.id}"
     ]
   }
 
@@ -73,7 +62,7 @@ resource "aws_security_group" "router" {
     to_port   = 443
     protocol  = "tcp"
     security_groups = [
-      "${aws_security_group.router_loadbalancer.id}",
+      "${aws_security_group.web.id}"
     ]
   }
 
