@@ -78,6 +78,15 @@ resource "aws_security_group" "tsuru_api_internal_loadbalancer" {
   description = "Tsuru API internal load balancer security group"
   vpc_id = "${aws_vpc.default.id}"
 
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    security_groups = [
+      "${aws_security_group.gandalf.id}",
+    ]
+  }
+
   tags = {
     Name = "${var.env}-tsuru-api-internal-loadbalancer"
   }
