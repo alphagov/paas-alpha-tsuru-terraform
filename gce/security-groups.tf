@@ -182,7 +182,7 @@ resource "google_compute_firewall" "postgres" {
       "${google_compute_instance.api.*.network_interface.0.address}",
       "${google_compute_instance.coreos-docker.*.network_interface.0.address}"
     ]
-    source_tags = ["api", "docker-node", "postgres"]
+    source_tags = ["docker-node", "postgres"]
     target_tags = ["postgres"]
 
     allow {
