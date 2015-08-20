@@ -1,20 +1,22 @@
 resource "aws_security_group" "default" {
   name = "${var.env}-default-tsuru"
-  description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
+  description = "Default security group which allows SSH access and outbound traffic"
   vpc_id = "${aws_vpc.default.id}"
 
+  # Allow inbound SSH access
+  ingress {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    self            = true
+  }
+
+  # Allow outbound traffic via NAT box
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    self        = true
   }
 
   tags {
