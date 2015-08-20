@@ -4,7 +4,10 @@ resource "aws_instance" "api" {
   instance_type = "t2.medium"
   subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
   availability_zone = "${element(aws_subnet.private.*.availability_zone, count.index)}"
-  security_groups = ["${aws_security_group.default.id}"]
+  security_groups = [
+    "${aws_security_group.default.id}",
+    "${aws_security_group.tsuru_api.id}"
+  ]
   key_name = "${var.key_pair_name}"
   tags = {
     Name = "${var.env}-tsuru-api-${count.index}"
@@ -52,4 +55,10 @@ resource "aws_elb" "api-int" {
     lb_port = 443
     lb_protocol = "tcp"
   }
+}
+
+resource "aws_security_group" "tsuru_api" {
+  name = "tsuru_api"
+  description = "Tsuru API security group"
+  vpc_id = "${aws_vpc.default.id}"
 }
