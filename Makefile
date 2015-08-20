@@ -33,6 +33,12 @@ plan-aws: check-env-var check-env-aws
 plan-gce: check-env-var
 	$(call TERRAFORM_CMD,gce,plan)
 
+taint-aws: check-env-var check-env-aws
+	 $(call TERRAFORM_CMD,aws,taint)
+
+taint-gce: check-env-var
+	$(call TERRAFORM_CMD,gce,taint)
+
 destroy-aws: check-env-var check-env-aws
 	$(call TERRAFORM_CMD,aws,destroy)
 
