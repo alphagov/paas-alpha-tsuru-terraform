@@ -10,3 +10,26 @@ resource "aws_instance" "gandalf" {
   }
 }
 
+resource "aws_security_group" "gandalf" {
+  name = "${var.env}-tsuru-gandalf"
+  description = "Security group for Gandalf instance that allows SSH access from internet"
+  vpc_id = "${aws_vpc.default.id}"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}","${aws_instance.nat.public_ip}/32"]
+  }
+
+  tags {
+    Name = "${var.env}-tsuru-gandalf"
+  }
+}
