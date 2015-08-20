@@ -17,7 +17,10 @@ resource "aws_instance" "api" {
 resource "aws_elb" "api-ext" {
   name = "${var.env}-tsuru-api-elb-ext"
   subnets = ["${aws_subnet.public.*.id}"]
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  security_groups = [
+    "${aws_security_group.web.id}",
+    "${aws_security_group.tsuru_api_external_loadbalancer.id}"
+  ]
   instances = ["${aws_instance.api.*.id}"]
 
   health_check {
@@ -39,7 +42,10 @@ resource "aws_elb" "api-int" {
   name = "${var.env}-tsuru-api-elb-int"
   subnets = ["${aws_subnet.private.*.id}"]
   internal = true
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  security_groups = [
+    "${aws_security_group.web.id}",
+    "${aws_security_group.tsuru_api_internal_loadbalancer.id}"
+  ]
   instances = ["${aws_instance.api.*.id}"]
 
   health_check {
@@ -57,8 +63,42 @@ resource "aws_elb" "api-int" {
   }
 }
 
+resource "aws_security_group" "tsuru_api_external_loadbalancer" {
+  name = "${var.env}-tsuru-api-external-loadbalancer"
+  description = "Tsuru API external load balancer security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  tags = {
+    Name = "${var.env}-tsuru-api-external-loadbalancer"
+  }
+}
+
+resource "aws_security_group" "tsuru_api_internal_loadbalancer" {
+  name = "${var.env}-tsuru-api-internal-loadbalancer"
+  description = "Tsuru API internal load balancer security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  tags = {
+    Name = "${var.env}-tsuru-api-internal-loadbalancer"
+  }
+}
+
 resource "aws_security_group" "tsuru_api" {
-  name = "tsuru_api"
+  name = "${var.env}-tsuru-api"
   description = "Tsuru API security group"
   vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    security_groups = [
+      "${aws_security_group.tsuru_api_external_loadbalancer.id}",
+      "${aws_security_group.tsuru_api_internal_loadbalancer.id}"
+    ]
+  }
+
+  tags = {
+    Name = "${var.env}-tsuru-api"
+  }
 }
