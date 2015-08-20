@@ -1,5 +1,7 @@
-.PHONY: all aws gce refresh-aws refresh-gce check-env-var check-env-aws \
-	plan-aws plan-gce start-aws start-gce destroy-aws destroy-gce
+.PHONY: all prep \
+	aws gce refresh-aws refresh-gce\
+	check-env-var check-env-aws \
+	plan-aws plan-gce start-aws start-gce
 
 TERRAFORM_CMD = cd $(1) && \
 	terraform $(2) \
@@ -14,6 +16,8 @@ endif
 
 all:
 	$(error Usage: make <action> DEPLOY_ENV=name [DESTROY_BUCKET=true] [ARGS=extra_args])
+prep:
+	touch aws/ETCD_CLUSTER_ID gce/ETCD_CLUSTER_ID
 
 aws: check-env-var check-env-aws
 	$(call TERRAFORM_CMD,aws,apply)
