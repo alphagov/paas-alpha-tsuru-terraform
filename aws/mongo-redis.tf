@@ -4,6 +4,7 @@ resource "aws_instance" "tsuru-db" {
   subnet_id = "${aws_subnet.private.0.id}"
   security_groups = [
     "${aws_security_group.default.id}",
+    "${aws_security_group.mongodb.id}",
     "${aws_security_group.redis.id}"
   ]
   key_name = "${var.key_pair_name}"
@@ -12,6 +13,21 @@ resource "aws_instance" "tsuru-db" {
   }
 }
 
+resource "aws_security_group" "mongodb" {
+  name = "mongodb"
+  description = "MongoDB security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+      from_port = 0
+      to_port = 27017
+      protocol = "tcp"
+      security_groups = [
+        "${aws_security_group.tsuru_api.id}",
+        "${aws_security_group.gandalf.id}"
+      ]
+  }
+}
 
 resource "aws_security_group" "redis" {
   name = "redis"
