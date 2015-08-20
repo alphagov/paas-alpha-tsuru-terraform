@@ -73,6 +73,20 @@ resource "google_compute_firewall" "gandalf" {
   }
 }
 
+resource "google_compute_firewall" "docker-node-to-archive" {
+  name = "${var.env}-tsuru-docker-node-to-archive"
+  description = "Security group for Docker node to be able to pull files from the archive"
+  network = "${google_compute_network.network1.name}"
+
+  source_tags = [ "docker-node" ]
+  target_tags = [ "gandalf" ]
+
+  allow {
+    protocol = "tcp"
+    ports = [ 3232 ]
+  }
+}
+
 resource "google_compute_firewall" "web" {
   name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"
