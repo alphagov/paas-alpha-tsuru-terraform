@@ -42,7 +42,11 @@ resource "aws_elb" "router" {
 }
 
 resource "aws_security_group" "router" {
-  name = "router"
+  name = "${var.env}-router"
   description = "Router security group"
   vpc_id = "${aws_vpc.default.id}"
+
+  tags = {
+    Name = "${var.env}-tsuru-router"
+  }
 }

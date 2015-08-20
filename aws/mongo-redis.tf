@@ -13,7 +13,7 @@ resource "aws_instance" "tsuru-db" {
 }
 
 resource "aws_security_group" "mongodb" {
-  name = "mongodb"
+  name = "${var.env}-mongodb"
   description = "MongoDB security group"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -26,10 +26,14 @@ resource "aws_security_group" "mongodb" {
         "${aws_security_group.gandalf.id}"
       ]
   }
+
+  tags = {
+    Name = "${var.env}-tsuru-db"
+  }
 }
 
 resource "aws_security_group" "redis" {
-  name = "redis"
+  name = "${var.env}-redis"
   description = "Redis security group"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -41,5 +45,9 @@ resource "aws_security_group" "redis" {
         "${aws_security_group.tsuru_api.id}",
         "${aws_security_group.router.id}"
       ]
+  }
+
+  tags = {
+    Name = "${var.env}-tsuru-db"
   }
 }

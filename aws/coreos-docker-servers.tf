@@ -35,7 +35,7 @@ resource "template_file" "etcd_discovery_url" {
 }
 
 resource "aws_security_group" "docker_node" {
-  name = "docker_node"
+  name = "${var.env}-docker-node"
   description = "Docker Node security group"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -47,5 +47,9 @@ resource "aws_security_group" "docker_node" {
         "${aws_security_group.tsuru_api.id}",
         "${aws_security_group.router.id}"
       ]
+  }
+
+  tags = {
+    Name = "${var.env}-tsuru-coreos-docker"
   }
 }

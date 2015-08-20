@@ -72,7 +72,7 @@ resource "aws_s3_bucket" "registry-s3" {
 }
 
 resource "aws_security_group" "docker_registry" {
-  name = "docker_registry"
+  name = "${var.env}-docker-registry"
   description = "Docker Node security group"
   vpc_id = "${aws_vpc.default.id}"
 
@@ -83,5 +83,9 @@ resource "aws_security_group" "docker_registry" {
       security_groups = [
         "${aws_security_group.docker_node.id}"
       ]
+  }
+
+  tags = {
+    Name = "${var.env}-tsuru-registry"
   }
 }
