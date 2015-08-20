@@ -17,7 +17,10 @@ resource "aws_instance" "router" {
 resource "aws_elb" "router" {
   name = "${var.env}-tsuru-router-elb"
   subnets = ["${aws_subnet.public.*.id}"]
-  security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
+  security_groups = [
+    "${aws_security_group.web.id}",
+    "${aws_security_group.router_loadbalancer.id}",
+  ]
   instances = ["${aws_instance.router.*.id}"]
 
   health_check {
@@ -41,10 +44,38 @@ resource "aws_elb" "router" {
   }
 }
 
+resource "aws_security_group" "router_loadbalancer" {
+  name = "${var.env}-router_loadbalancer"
+  description = "Router load balancer security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  tags = {
+    Name = "${var.env}-tsuru-router-loadbalancer"
+  }
+}
+
 resource "aws_security_group" "router" {
   name = "${var.env}-router"
   description = "Router security group"
   vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+    security_groups = [
+      "${aws_security_group.router_loadbalancer.id}",
+    ]
+  }
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    security_groups = [
+      "${aws_security_group.router_loadbalancer.id}",
+    ]
+  }
 
   tags = {
     Name = "${var.env}-tsuru-router"
