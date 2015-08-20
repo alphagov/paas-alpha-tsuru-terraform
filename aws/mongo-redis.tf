@@ -3,6 +3,7 @@ resource "aws_instance" "tsuru-db" {
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private.0.id}"
   security_groups = [
+    "${aws_security_group.default.id}",
     "${aws_security_group.mongodb.id}",
     "${aws_security_group.redis.id}"
   ]
