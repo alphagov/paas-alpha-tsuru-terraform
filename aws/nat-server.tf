@@ -22,7 +22,7 @@ resource "aws_instance" "nat" {
 
 resource "aws_security_group" "nat" {
   name = "${var.env}-nat-tsuru"
-  description = "Security group for nat instances that allows SSH from internet"
+  description = "Security group for nat instances that allows SSH from whitelisted IPs from internet"
   vpc_id = "${aws_vpc.default.id}"
 
   ingress {
