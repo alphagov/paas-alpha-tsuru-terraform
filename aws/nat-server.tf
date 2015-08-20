@@ -3,8 +3,8 @@ resource "aws_instance" "nat" {
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.public.0.id}"
   security_groups = [
-    "${aws_security_group.default.id}",
-    "${aws_security_group.nat.id}"
+    "${aws_security_group.nat.id}",
+    "${aws_security_group.nat_route.id}"
   ]
   key_name = "${var.key_pair_name}"
   source_dest_check = false
@@ -22,7 +22,24 @@ resource "aws_instance" "nat" {
 
 resource "aws_security_group" "nat" {
   name = "${var.env}-nat-tsuru"
-  description = "Security group for nat instances that allows SSH and VPN traffic from internet"
+  description = "Security group for nat instances that allows SSH from internet"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
+  }
+
+  tags {
+    Name = "${var.env}-tsuru-nat"
+  }
+}
+
+resource "aws_security_group" "nat_route" {
+  name = "${var.env}-nat-route-tsuru"
+  description = "Security group for nat instances that allows routing VPC traffic to internet"
   vpc_id = "${aws_vpc.default.id}"
 
   egress {
@@ -41,14 +58,7 @@ resource "aws_security_group" "nat" {
     ]
   }
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
-  }
-
   tags {
-    Name = "${var.env}-tsuru-nat"
+    Name = "${var.env}-tsuru-nat-route"
   }
 }
