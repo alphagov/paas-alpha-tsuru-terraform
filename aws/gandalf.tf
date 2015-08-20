@@ -47,6 +47,7 @@ resource "aws_security_group" "gandalf" {
       protocol = "tcp"
       security_groups = [
         "${aws_security_group.tsuru_api.id}",
+        "${aws_security_group.docker_node.id}"
       ]
   }
 
