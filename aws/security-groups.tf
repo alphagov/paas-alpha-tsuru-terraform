@@ -22,30 +22,6 @@ resource "aws_security_group" "default" {
   }
 }
 
-resource "aws_security_group" "nat" {
-  name = "${var.env}-nat-tsuru"
-  description = "Security group for nat instances that allows SSH and VPN traffic from internet"
-  vpc_id = "${aws_vpc.default.id}"
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-    cidr_blocks = ["${split(",", var.office_cidrs)}","${var.jenkins_elastic}"]
-  }
-
-  tags {
-    Name = "${var.env}-tsuru-nat"
-  }
-}
-
 resource "aws_security_group" "web" {
   name = "${var.env}-web-tsuru"
   description = "Security group for web that allows web traffic from internet"
