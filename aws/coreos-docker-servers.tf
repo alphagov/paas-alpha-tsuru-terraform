@@ -49,6 +49,15 @@ resource "aws_security_group" "docker_node" {
       ]
   }
 
+  ingress {
+      from_port = 1024
+      to_port = 65535
+      protocol = "tcp"
+      security_groups = [
+        "${aws_security_group.tsuru_api.id}"
+      ]
+  }
+
   tags = {
     Name = "${var.env}-tsuru-coreos-docker"
   }
