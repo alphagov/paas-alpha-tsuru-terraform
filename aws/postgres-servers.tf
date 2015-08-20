@@ -77,6 +77,7 @@ resource "aws_security_group" "postgres" {
     from_port = 5432
     to_port   = 5432
     protocol  = "tcp"
+    self      = true
     security_groups = [
       "${aws_security_group.docker_node.id}"
     ]
