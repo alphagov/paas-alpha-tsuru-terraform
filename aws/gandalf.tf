@@ -41,6 +41,15 @@ resource "aws_security_group" "gandalf" {
       ]
   }
 
+  ingress {
+      from_port = 3232
+      to_port = 3232
+      protocol = "tcp"
+      security_groups = [
+        "${aws_security_group.tsuru_api.id}",
+      ]
+  }
+
   tags {
     Name = "${var.env}-tsuru-gandalf"
   }
