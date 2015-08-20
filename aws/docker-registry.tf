@@ -50,7 +50,10 @@ resource "aws_instance" "docker-registry" {
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "t2.medium"
   subnet_id = "${aws_subnet.private.0.id}"
-  security_groups = ["${aws_security_group.default.id}"]
+  security_groups = [
+    "${aws_security_group.default.id}",
+    "${aws_security_group.docker_registry.id}"
+  ]
   key_name = "${var.key_pair_name}"
   iam_instance_profile = "${var.registry_s3_rolename}"
   tags = {
@@ -68,3 +71,17 @@ resource "aws_s3_bucket" "registry-s3" {
     force_destroy = "${var.force_destroy}"
 }
 
+resource "aws_security_group" "docker_registry" {
+  name = "docker_registry"
+  description = "Docker Node security group"
+  vpc_id = "${aws_vpc.default.id}"
+
+  ingress {
+      from_port = 0
+      to_port = 6000
+      protocol = "tcp"
+      security_groups = [
+        "${aws_security_group.docker_node.id}"
+      ]
+  }
+}
