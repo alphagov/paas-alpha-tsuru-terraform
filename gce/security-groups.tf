@@ -4,7 +4,7 @@ resource "google_compute_firewall" "nat-to-internal" {
   network = "${google_compute_network.network1.name}"
 
   source_tags = [ "nat" ]
-  target_tags = [ "private" ]
+  target_tags = [ "private", "gandalf", "grafana" ]
 
   allow {
     protocol = "tcp"
