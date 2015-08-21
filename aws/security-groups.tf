@@ -8,7 +8,9 @@ resource "aws_security_group" "default" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    self            = true
+    security_groups = [
+      "${aws_security_group.nat.id}"
+    ]
   }
 
   # Allow outbound traffic via NAT box
