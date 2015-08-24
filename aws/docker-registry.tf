@@ -81,7 +81,6 @@ resource "aws_security_group" "docker_registry" {
       to_port = 6000
       protocol = "tcp"
       security_groups = [
-      "${aws_security_group.tsuru_api.id}",
         "${aws_security_group.docker_node.id}"
       ]
   }
