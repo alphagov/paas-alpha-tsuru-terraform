@@ -1,26 +1,3 @@
-resource "google_dns_record_set" "wildcard" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "*.${var.env}-hipache.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
-}
-
-resource "google_dns_record_set" "api" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-api.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_address.api.address}"]
-}
-
-resource "google_dns_record_set" "gandalf" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-gandalf.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_instance.gandalf.network_interface.0.access_config.0.nat_ip}"]
-}
 
 resource "google_dns_record_set" "nat" {
   managed_zone = "${var.dns_zone_id}"
@@ -38,34 +15,3 @@ resource "google_dns_record_set" "docker-registry" {
   rrdatas = ["${google_compute_instance.docker-registry.network_interface.0.address}"]
 }
 
-resource "google_dns_record_set" "postgres-master" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-postgres-master.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_instance.postgres.0.network_interface.0.address}"]
-}
-
-resource "google_dns_record_set" "postgresapi" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-postgresapi.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
-}
-
-resource "google_dns_record_set" "grafana" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-grafana.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_instance.influx-grafana.network_interface.0.access_config.0.nat_ip}"]
-}
-
-resource "google_dns_record_set" "elasticsearchapi" {
-  managed_zone = "${var.dns_zone_id}"
-  name = "${var.env}-elasticsearchapi.${var.dns_zone_name}"
-  type = "A"
-  ttl = "60"
-  rrdatas = ["${google_compute_forwarding_rule.router_https.ip_address}"]
-}
