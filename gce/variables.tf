@@ -1,8 +1,3 @@
-variable "gce_account_file" {
-  description = "JSON Account Credentials file for GCE"
-  default = "account.json"
-}
-
 variable "gce_project" {
   description = "GCE Project Name to create machines inside of"
   default = "root-unison-859"
