@@ -35,7 +35,7 @@ variable "os_image" {
 
 variable "coreos_image" {
   description = "coreOS image to deploy our coreOS instances"
-  default = "coreos-stable-723-3-0-v20150804"
+  default = "coreos-stable-766-4-0-v20150929"
 }
 
 variable "network1_cidr" {

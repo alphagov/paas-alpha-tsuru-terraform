@@ -46,8 +46,8 @@ variable "ubuntu_amis" {
 variable "coreos_amis" {
   description = "AMIs to launch coreOS instances"
   default = {
-    eu-west-1 = "ami-0e104179"
-    eu-central-1 = "ami-b8cecaa5"
+    eu-west-1 = "ami-eb97bc9c"
+    eu-central-1 = "ami-840a0899"
   }
 }
 
