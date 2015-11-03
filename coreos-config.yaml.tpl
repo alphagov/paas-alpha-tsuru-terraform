@@ -32,3 +32,29 @@ coreos:
           content: |
             [Service]
             Environment=DOCKER_OPTS='--insecure-registry="${docker_registry_host}"'
+    - name: telegraf.service
+      command: start
+      drop-ins:
+        - name: 50-docker-telegraf
+          content: |
+            [Unit]
+            Description=Telegraf container
+            Requires=docker.service
+            After=docker.service
+
+            [Service]
+            Restart=always
+            ExecStart=/usr/bin/docker run \
+              --name telegraf \
+              -v /proc:/host/proc \
+              -v /sys:/host/sys \
+              -v /dev:/host/dev \
+              -e TELEGRAF_INFLUX_DB_URL=http://${influx_db_host}:8086 \
+              -e TELEGRAF_INFLUX_DB_NAME=influxdb \
+              -e TELEGRAF_INFLUX_DB_USER_NAME=influxdb \
+              -e TELEGRAF_INFLUX_DB_PASSWORD=influxdb \
+              telegraf
+            ExecStop=/usr/bin/docker stop -t 2 telegraf
+
+            [Install]
+            WantedBy=local.target
