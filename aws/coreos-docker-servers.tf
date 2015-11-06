@@ -1,5 +1,5 @@
 resource "aws_instance" "coreos-docker" {
-  depends_on = [ "template_file.etcd_cloud_config" ]
+  depends_on = ["template_file.etcd_cloud_config"] 
   count = "${var.docker_count}"
   ami = "${lookup(var.coreos_amis, var.region)}"
   instance_type = "t2.medium"
@@ -11,7 +11,7 @@ resource "aws_instance" "coreos-docker" {
   ]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${element(template_file.etcd_cloud_config.*.vars.telegraf_tag_instance_name, count.index)}"
+    Name = "${var.env}-tsuru-coreos-docker-${count.index}"
   }
   user_data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
 }
