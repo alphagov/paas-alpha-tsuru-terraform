@@ -11,18 +11,21 @@ resource "aws_instance" "coreos-docker" {
   ]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-tsuru-coreos-docker-${count.index}"
+    Name = "${element(template_file.etcd_cloud_config.*.vars.grafana_tag_job, count.index)}"
   }
-  user_data = "${template_file.etcd_cloud_config.rendered}"
+  user_data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
 }
 
 resource "template_file" "etcd_cloud_config" {
   depends_on = [ "template_file.etcd_discovery_url" ]
+  count = "${var.docker_count}"
   filename = "../coreos-config.yaml.tpl"
   vars {
     etcd_discovery_url = "${file("ETCD_CLUSTER_ID")}"
     docker_registry_host = "${replace(aws_route53_record.docker-registry.name, "/\.$/", ":${var.registry_port}")}"
     influx_db_host = "${aws_instance.influx-grafana.private_ip}"
+    grafana_tag_job = "${var.env}-tsuru-coreos-docker-${count.index}"
+    grafana_tag_type = "coreos-docker"
   }
 }
 
