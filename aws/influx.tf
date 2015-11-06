@@ -9,7 +9,7 @@ resource "aws_instance" "influx-grafana" {
   ]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${var.env}-influx-grafana"
+    Name = "${var.env}-tsuru-influx-grafana"
   }
   root_block_device {
     volume_type = "gp2"

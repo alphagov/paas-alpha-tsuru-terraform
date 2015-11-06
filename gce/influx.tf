@@ -1,5 +1,5 @@
 resource "google_compute_instance" "influx-grafana" {
-  name = "${var.env}-influx-grafana"
+  name = "${var.env}-tsuru-influx-grafana"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
