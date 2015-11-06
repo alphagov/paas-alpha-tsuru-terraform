@@ -52,7 +52,7 @@ coreos:
           -e TELEGRAF_INFLUX_DB_NAME=influxdb \
           -e TELEGRAF_INFLUX_DB_USER_NAME=influxdb \
           -e TELEGRAF_INFLUX_DB_PASSWORD=influxdb \
-          -e TELEGRAF_INFLUX_TAGS=job=\"${grafana_tag_job}\":type=\"${grafana_tag_type}\":host_ip=\"$private_ipv4\" \
+          -e TELEGRAF_INFLUX_TAGS=instance_name=\"${telegraf_tag_instance_name}\":type=\"${telegraf_tag_type}\":host_ip=\"$private_ipv4\" \
           saliceti/docker-telegraf
         ExecStop=/usr/bin/docker stop -t 2 telegraf
 

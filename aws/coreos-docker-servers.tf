@@ -11,7 +11,7 @@ resource "aws_instance" "coreos-docker" {
   ]
   key_name = "${var.key_pair_name}"
   tags = {
-    Name = "${element(template_file.etcd_cloud_config.*.vars.grafana_tag_job, count.index)}"
+    Name = "${element(template_file.etcd_cloud_config.*.vars.telegraf_tag_instance_name, count.index)}"
   }
   user_data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
 }
@@ -24,8 +24,8 @@ resource "template_file" "etcd_cloud_config" {
     etcd_discovery_url = "${file("ETCD_CLUSTER_ID")}"
     docker_registry_host = "${replace(aws_route53_record.docker-registry.name, "/\.$/", ":${var.registry_port}")}"
     influx_db_host = "${aws_instance.influx-grafana.private_ip}"
-    grafana_tag_job = "${var.env}-tsuru-coreos-docker-${count.index}"
-    grafana_tag_type = "coreos-docker"
+    telegraf_tag_instance_name = "${var.env}-tsuru-coreos-docker-${count.index}"
+    telegraf_tag_type = "coreos-docker"
   }
 }
 
