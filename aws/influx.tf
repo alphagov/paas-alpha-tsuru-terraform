@@ -48,7 +48,9 @@ resource "aws_security_group" "grafana" {
     to_port   = 8086
     protocol  = "tcp"
     security_groups = [
-      "${aws_security_group.default.id}"
+      "${aws_security_group.default.id}",
+      "${aws_security_group.nat.id}",
+      "${aws_security_group.gandalf.id}"
     ]
   }
 
