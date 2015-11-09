@@ -12,7 +12,7 @@ resource "google_compute_instance" "coreos-docker" {
   }
   metadata {
     sshKeys = "core:${file("${var.ssh_key_path}")}"
-    user_data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
+    user-data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
   }
   service_account {
     scopes = [ "compute-ro", "storage-ro", "userinfo-email" ]
