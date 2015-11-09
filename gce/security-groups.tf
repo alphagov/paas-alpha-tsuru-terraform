@@ -130,7 +130,7 @@ resource "google_compute_firewall" "influxdb" {
   network = "${google_compute_network.network1.name}"
 
 
-  source_tags = [ "private" ]
+  source_tags = [ "private", "nat", "gandalf" ]
   target_tags = [ "influxdb" ]
 
   allow {
