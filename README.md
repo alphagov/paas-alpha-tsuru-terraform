@@ -56,6 +56,7 @@ the bucket with `-target` to avoid recreating all the other resources:
 ```bash
 # On AWS:
 terraform apply -var env=<env-name-prefix> -var force_destroy=true -target=aws_s3_bucket.registry-s3
+terraform taint aws_instance.tsuru-db # Required due to [bug in Terraform detaching EBS Volumes](https://github.com/hashicorp/terraform/issues/2957)
 terraform destroy -var env=<env-name-prefix> -var force_destroy=true
 # On GCE:
 terraform apply -var env=<env-name-prefix> -var force_destroy=true -target=google_storage_bucket.registry-gcs
