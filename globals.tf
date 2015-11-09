@@ -43,7 +43,7 @@ variable "postgres_bucketname" {
 }
 
 variable "docker_count" {
-  description = "Number of docker nodes. For CoreOS this should be at least 3 and even, to make etcd quorums easier"
+  description = "Number of docker nodes. For CoreOS this should be at least 3 and odd, to make etcd quorums easier"
   default = 3
 }
 
