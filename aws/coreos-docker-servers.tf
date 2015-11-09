@@ -1,5 +1,5 @@
 resource "aws_instance" "coreos-docker" {
-  depends_on = [ "template_file.etcd_cloud_config" ]
+  depends_on = ["template_file.etcd_cloud_config"] 
   count = "${var.docker_count}"
   ami = "${lookup(var.coreos_amis, var.region)}"
   instance_type = "t2.medium"
@@ -13,15 +13,19 @@ resource "aws_instance" "coreos-docker" {
   tags = {
     Name = "${var.env}-tsuru-coreos-docker-${count.index}"
   }
-  user_data = "${template_file.etcd_cloud_config.rendered}"
+  user_data = "${element(template_file.etcd_cloud_config.*.rendered, count.index)}"
 }
 
 resource "template_file" "etcd_cloud_config" {
   depends_on = [ "template_file.etcd_discovery_url" ]
+  count = "${var.docker_count}"
   filename = "../coreos-config.yaml.tpl"
   vars {
     etcd_discovery_url = "${file("ETCD_CLUSTER_ID")}"
     docker_registry_host = "${replace(aws_route53_record.docker-registry.name, "/\.$/", ":${var.registry_port}")}"
+    influx_db_host = "${aws_instance.influx-grafana.private_ip}"
+    telegraf_tag_instance_name = "${var.env}-tsuru-coreos-docker-${count.index}"
+    telegraf_tag_type = "coreos-docker"
   }
 }
 
