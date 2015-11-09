@@ -1,7 +1,7 @@
 resource "google_compute_instance" "coreos-docker" {
   depends_on = [ "template_file.etcd_cloud_config" ]
   count = "${var.docker_count}"
-  name = "${element(template_file.etcd_cloud_config.*.vars.telegraf_tag_instance_name, count.index)}"
+  name = "${var.env}-tsuru-coreos-docker-${count.index}"
   machine_type = "n1-standard-1"
   zone = "${element(split(",", var.gce_zones), count.index)}"
   disk {
