@@ -1,3 +1,11 @@
+resource "aws_ebs_volume" "tsuru-db" {
+    availability_zone = "${element(aws_subnet.private.*.availability_zone, 0)}"
+    size = 40
+    tags {
+        Name = "tsuru-db"
+    }
+}
+
 resource "aws_instance" "tsuru-db" {
   ami = "${lookup(var.ubuntu_amis, var.region)}"
   instance_type = "t2.medium"
@@ -11,6 +19,13 @@ resource "aws_instance" "tsuru-db" {
   tags = {
     Name = "${var.env}-tsuru-db"
   }
+  user_data = "${file("user-data.tsuru-db")}"
+}
+
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/xvdh"
+  volume_id = "${aws_ebs_volume.tsuru-db.id}"
+  instance_id = "${aws_instance.tsuru-db.id}"
 }
 
 resource "aws_security_group" "mongodb" {
