@@ -77,3 +77,11 @@ resource "aws_route53_record" "elasticsearchapi" {
   ttl = "60"
   records = ["${aws_elb.router.dns_name}"]
 }
+
+resource "aws_route53_record" "redisapi" {
+  zone_id = "${var.dns_zone_id}"
+  name = "${var.env}-redisapi.${var.dns_zone_name}"
+  type = "CNAME"
+  ttl = "60"
+  records = ["${aws_elb.router.dns_name}"]
+}
