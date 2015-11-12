@@ -5,3 +5,5 @@ gce/ssh/
 gce/account.json
 aws/ETCD_CLUSTER_ID
 gce/ETCD_CLUSTER_ID
+aws/REDIS_ETCD_CLUSTER_ID
+gce/REDIS_ETCD_CLUSTER_ID
