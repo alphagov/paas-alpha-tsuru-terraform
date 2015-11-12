@@ -47,6 +47,10 @@ variable "docker_count" {
   default = 3
 }
 
+variable "redis_count" {
+  description = "Number of Redis nodes. For CoreOS this should be at least 3 and odd, to make etcd quorums easier"
+  default = 3
+}
 variable "registry_port" {
   description = "Port the registry servers on."
   default = 6000
