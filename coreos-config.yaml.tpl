@@ -22,6 +22,7 @@ coreos:
         ListenStream=4243
         Service=docker.service
         BindIPv6Only=both
+        BindToDevice=ens4v1
 
         [Install]
         WantedBy=sockets.target
